@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://dy4e6x670743m" path="res://Game/board/new_script.gd" id="1_qj6ra"]
 [ext_resource type="PackedScene" uid="uid://bc3kym46wht34" path="res://Game/goalzone/goalzone.tscn" id="2_uliie"]
 [ext_resource type="PackedScene" uid="uid://qxjcs8kh6whj" path="res://Game/vacuum/vacuum.tscn" id="3_vsefh"]
+[ext_resource type="PackedScene" uid="uid://cofly6mxhsjld" path="res://Game/power_zone/power_zone.tscn" id="4_yoiij"]
 
 [node name="Board" type="Node2D" unique_id=1187871317]
 script = ExtResource("1_qj6ra")
@@ -23,3 +24,6 @@ position = Vector2(360, 73)
 
 [node name="Vacuum" parent="." unique_id=1938523004 instance=ExtResource("3_vsefh")]
 position = Vector2(363, 1241)
+
+[node name="PowerZone" parent="." unique_id=797739464 instance=ExtResource("4_yoiij")]
+position = Vector2(382, 702)

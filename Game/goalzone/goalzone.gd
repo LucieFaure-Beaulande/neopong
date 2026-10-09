@@ -47,5 +47,4 @@ func _on_pull_finished() -> void:
 	
 func _draw() -> void:
 	var color = Color.DIM_GRAY
-	print(dynamic_collision_shape.get_polygon())
 	draw_colored_polygon(dynamic_collision_shape.get_polygon(), color)

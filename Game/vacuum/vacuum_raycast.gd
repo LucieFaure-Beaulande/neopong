@@ -26,9 +26,7 @@ func _physics_process(delta: float) -> void:
 			
 
 func _draw() -> void:
-	print(get_collision_point())
 	var distance_limit:int = (get_collision_point().distance_to(global_position) if is_colliding() else 10000)
-	print(distance_limit)
 	var points = PackedVector2Array([
 		position,
 		Vector2(distance_limit, vacuum_angle), # Bas gauche
