@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://8kiwc2w1jjdf"]
+
+[ext_resource type="Script" uid="uid://cp1ob1qybs2g6" path="res://Game/vacuum/vacuum_zone.gd" id="1_fomdi"]
+[ext_resource type="PackedScene" uid="uid://qxjcs8kh6whj" path="res://Game/vacuum/vacuum.tscn" id="2_hsjx8"]
+
+[node name="VacuumZone" type="Area2D" unique_id=1960340670]
+script = ExtResource("1_fomdi")
+metadata/_custom_type_script = "uid://cbynmiekcj4to"
+
+[node name="Vacuum" parent="." unique_id=1938523004 instance=ExtResource("2_hsjx8")]
+
+[connection signal="vacuum_enabled" from="." to="Vacuum" method="_on_vacuum_zone_vacuum_enabled"]
