@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://bc3kym46wht34"]
+
+[ext_resource type="Script" uid="uid://b5wqkuktxja1s" path="res://Game/goalzone/goalzone.gd" id="1_8robk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1xdq2"]
+size = Vector2(900, 20)
+
+[node name="Goalzone" type="Area2D" unique_id=586597398]
+z_index = 1
+script = ExtResource("1_8robk")
+metadata/_custom_type_script = "uid://b5wqkuktxja1s"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1048294507]
+offset_left = -360.0
+offset_top = -10.0
+offset_right = 360.0
+offset_bottom = 10.0
+color = Color(0.40705615, 0.40705618, 0.40705615, 1)
+
+[node name="BaseCollisionShape" type="CollisionShape2D" parent="." unique_id=1330271176]
+shape = SubResource("RectangleShape2D_1xdq2")
+
+[node name="DynamicCollisionShape" type="CollisionPolygon2D" parent="." unique_id=379632957]
+position = Vector2(0, 1)
+polygon = PackedVector2Array(0, 0, -360, 0, 0, 0, 360, 0)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
