@@ -1,27 +1,21 @@
 [gd_scene format=3 uid="uid://o3merluvrn1h"]
 
-<<<<<<< HEAD
-[ext_resource type="Script" uid="uid://dgl0018x54r1e" path="res://Game/board/multitouches.gd" id="1_qj6ra"]
-=======
 [ext_resource type="PackedScene" uid="uid://8kiwc2w1jjdf" path="res://Game/vacuum/vacuum_zone.tscn" id="1_qj6ra"]
 [ext_resource type="PackedScene" uid="uid://bc3kym46wht34" path="res://Game/goalzone/goalzone.tscn" id="2_uliie"]
+[ext_resource type="PackedScene" uid="uid://7m6r7da5rdw0" path="res://Game/rebondisseur/Rebondisseur.tscn" id="3_vsefh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uhwdc"]
 size = Vector2(759, 314)
->>>>>>> c3862e0310e00598b247d79171850247a3c72192
 
 [node name="Board" type="Node2D" unique_id=1187871317]
-script = ExtResource("1_qj6ra")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1737327288]
-visible = false
 offset_right = 720.0
 offset_bottom = 640.0
 mouse_filter = 1
 color = Color(1, 0.5904081, 0.5299569, 1)
 
 [node name="ColorRect2" type="ColorRect" parent="." unique_id=1419195896]
-visible = false
 offset_top = 640.0
 offset_right = 720.0
 offset_bottom = 1280.0
@@ -38,3 +32,5 @@ position = Vector2(360, 1143)
 position = Vector2(-3, 2)
 shape = SubResource("RectangleShape2D_uhwdc")
 debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
+
+[node name="Rebondisseur" parent="." unique_id=302749196 instance=ExtResource("3_vsefh")]
