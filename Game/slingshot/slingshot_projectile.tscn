@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://v0s1jbtupl54"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_71ro0"]
+friction = 0.0
+bounce = 1.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_43rjr"]
+radius = 20.0
+height = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_3j5br"]
+radius = 20.024984
+
+[node name="SlingshotProjectile" type="Node2D" unique_id=1740429359]
+
+[node name="SlingshotProjectile" type="RigidBody2D" parent="." unique_id=627719562 groups=["projectile"]]
+physics_material_override = SubResource("PhysicsMaterial_71ro0")
+gravity_scale = 0.0
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="SlingshotProjectile" unique_id=1398624877]
+mesh = SubResource("SphereMesh_43rjr")
+
+[node name="Sprite2D" type="Sprite2D" parent="SlingshotProjectile" unique_id=146558936]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlingshotProjectile" unique_id=364086055]
+shape = SubResource("CircleShape2D_3j5br")

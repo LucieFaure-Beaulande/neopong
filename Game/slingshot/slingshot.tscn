@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bqpl5o1ki1st4"]
+
+[ext_resource type="Texture2D" uid="uid://ioxodhhnvrbk" path="res://Game/slingshot/assets/trajectory_dash_line.png" id="1_2vby6"]
+[ext_resource type="Script" uid="uid://ns6s3mn2ncxi" path="res://Game/slingshot/slingshot.gd" id="1_wkq5f"]
+[ext_resource type="PackedScene" uid="uid://v0s1jbtupl54" path="res://Game/slingshot/slingshot_projectile.tscn" id="2_xxrtu"]
+
+[node name="Slingshot" type="Node2D" unique_id=1398244917]
+script = ExtResource("1_wkq5f")
+projectile_scene = ExtResource("2_xxrtu")
+
+[node name="LineLeft" type="Line2D" parent="." unique_id=2131308657]
+
+[node name="LineRight" type="Line2D" parent="." unique_id=2082656950]
+
+[node name="LineTrajectory" type="Line2D" parent="." unique_id=722387655]
+texture_repeat = 2
+default_color = Color(0.4246666, 0.91, 0, 1)
+texture = ExtResource("1_2vby6")
+texture_mode = 1

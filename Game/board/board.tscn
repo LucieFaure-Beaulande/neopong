@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://8kiwc2w1jjdf" path="res://Game/vacuum/vacuum_zone.tscn" id="1_qj6ra"]
 [ext_resource type="PackedScene" uid="uid://bc3kym46wht34" path="res://Game/goalzone/goalzone.tscn" id="2_uliie"]
+[ext_resource type="PackedScene" uid="uid://bqpl5o1ki1st4" path="res://Game/slingshot/slingshot.tscn" id="2_vsefh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uhwdc"]
 size = Vector2(759, 314)
@@ -23,6 +24,8 @@ color = Color(0.26892668, 0.48667043, 1, 1)
 
 [node name="Goalzone" parent="." unique_id=586597398 instance=ExtResource("2_uliie")]
 position = Vector2(362, 193)
+
+[node name="Slingshot" parent="." unique_id=1398244917 instance=ExtResource("2_vsefh")]
 
 [node name="VacuumZone" parent="." unique_id=1960340670 instance=ExtResource("1_qj6ra")]
 position = Vector2(360, 1143)
