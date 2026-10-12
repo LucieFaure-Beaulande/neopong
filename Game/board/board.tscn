@@ -4,6 +4,8 @@
 [ext_resource type="PackedScene" uid="uid://bc3kym46wht34" path="res://Game/goalzone/goalzone.tscn" id="2_uliie"]
 [ext_resource type="PackedScene" uid="uid://bqpl5o1ki1st4" path="res://Game/slingshot/slingshot.tscn" id="2_vsefh"]
 [ext_resource type="PackedScene" uid="uid://7m6r7da5rdw0" path="res://Game/rebondisseur/RebondisseurZone.tscn" id="3_vsefh"]
+[ext_resource type="PackedScene" uid="uid://mqytp7ivbaq0" path="res://Game/balle/Balle.tscn" id="5_o5hii"]
+[ext_resource type="PackedScene" uid="uid://c77x2loyfbrmn" path="res://Game/ux/UX.tscn" id="6_l62x2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43rjr"]
 size = Vector2(249.25, 700)
@@ -97,3 +99,12 @@ physics_material_override = SubResource("PhysicsMaterial_43rjr")
 [node name="BorderRight#CollisionShape2D" type="CollisionShape2D" parent="." unique_id=743419606]
 position = Vector2(637, 723)
 shape = SubResource("RectangleShape2D_3j5br")
+
+[node name="Balle" parent="." unique_id=558025850 instance=ExtResource("5_o5hii")]
+position = Vector2(364.99997, 641)
+
+[node name="GoalzoneRed" parent="." unique_id=1760812088 instance=ExtResource("2_uliie")]
+position = Vector2(370.99994, 1076)
+team = 1
+
+[node name="Ux" parent="." unique_id=1062955609 instance=ExtResource("6_l62x2")]

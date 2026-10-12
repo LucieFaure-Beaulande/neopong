@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://c77x2loyfbrmn"]
+
+[ext_resource type="Script" uid="uid://pdeauf7he0al" path="res://Game/ux/ux.gd" id="1_vypvd"]
+
+[node name="Ux" type="CanvasLayer" unique_id=1062955609]
+script = ExtResource("1_vypvd")
