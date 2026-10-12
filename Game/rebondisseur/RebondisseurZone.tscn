@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://7m6r7da5rdw0"]
+
+[ext_resource type="Script" uid="uid://4uwh4j8sr181" path="res://Game/rebondisseur/rebondisseur_zone.gd" id="1_lxxns"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_5wdvn"]
+
+[node name="Rebondisseur" type="Area2D" unique_id=588083500]
+script = ExtResource("1_lxxns")
+metadata/_custom_type_script = "uid://cbynmiekcj4to"
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" parent="." unique_id=922864877]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D" unique_id=1782641764]
+shape = SubResource("SegmentShape2D_5wdvn")
+debug_color = Color(0, 0, 0, 0.41960785)
