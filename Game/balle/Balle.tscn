@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://mqytp7ivbaq0"]
+
+[ext_resource type="Script" uid="uid://bbv47wx5ckjnm" path="res://Game/balle/balle.gd" id="1_jga73"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wxr5f"]
+radius = 21.023796
+
+[sub_resource type="SphereMesh" id="SphereMesh_wxr5f"]
+radius = 20.0
+height = 40.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_jga73"]
+load_path = "res://.godot/imported/balle.png-0a5e7579162c572bdc576f74ebe050f0.ctex"
+
+[node name="Balle" type="RigidBody2D" unique_id=558025850]
+script = ExtResource("1_jga73")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1147297361]
+shape = SubResource("CircleShape2D_wxr5f")
+debug_color = Color(1, 1, 1, 0.50980395)
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1343248533]
+mesh = SubResource("SphereMesh_wxr5f")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1763828622]
+scale = Vector2(0.3, 0.3)
+texture = SubResource("CompressedTexture2D_jga73")

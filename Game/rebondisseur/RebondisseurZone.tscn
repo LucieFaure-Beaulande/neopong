@@ -13,3 +13,6 @@ metadata/_custom_type_script = "uid://cbynmiekcj4to"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D" unique_id=1782641764]
 shape = SubResource("SegmentShape2D_5wdvn")
 debug_color = Color(0, 0, 0, 0.41960785)
+
+[node name="Line2D" type="Line2D" parent="AnimatableBody2D" unique_id=22118889]
+default_color = Color(0.8117647, 0, 0.34117648, 1)
