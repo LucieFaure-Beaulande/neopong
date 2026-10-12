@@ -21,6 +21,7 @@ color = Color(0, 1, 0, 1)
 
 [node name="RayCast2D" type="RayCast2D" parent="." unique_id=1631345839]
 target_position = Vector2(2000, 0)
+collision_mask = 2
 collide_with_areas = true
 script = ExtResource("2_y0ycr")
 metadata/_custom_type_script = "uid://dx7l1r5ohgorg"
