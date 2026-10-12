@@ -74,7 +74,6 @@ func get_position_from_touch_number(touch:int) -> Vector2:
 func remove_touch(touch_nb:int) ->void :
 	touch_order_dict.erase(touch_nb)
 	#touch_event_dict.erase(event.index)
-	print("removed ", touch_nb)
 	if touch_order_dict.size() == 0:
 		nb_of_touches = 0
 

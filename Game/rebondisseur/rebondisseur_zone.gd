@@ -6,12 +6,16 @@ var line_broken: bool = false
 
 # Adapte le chemin à ta scène
 @onready var collision_shape: CollisionShape2D = $AnimatableBody2D/CollisionShape2D
+@onready var area_shape: CollisionShape2D = $AnimatableBody2D/Area2D/CollisionShape2D
 
 var _segment: SegmentShape2D
+
+@export var _rect_width: int = 20
 
 func _ready() -> void:
 	_segment = SegmentShape2D.new()
 	collision_shape.shape = _segment
+	area_shape.shape = _segment
 	collision_shape.disabled = true
 
 func _physics_process(delta: float) -> void:
@@ -45,6 +49,7 @@ func _update_line_state() -> void:
 func _update_collision() -> void:
 	if not _line_active():
 		collision_shape.set_deferred("disabled", true)
+		area_shape.set_deferred("disabled", true)
 		return
 
 	var p1: Vector2 = get_position_from_touch_number(1)
@@ -53,7 +58,9 @@ func _update_collision() -> void:
 	# Les points du segment sont dans le repère local du CollisionShape2D
 	_segment.a = collision_shape.to_local(p1)
 	_segment.b = collision_shape.to_local(p2)
+	
 	collision_shape.set_deferred("disabled", false)
+	area_shape.set_deferred("disabled", false)
 
 func _draw() -> void:
 	if not _line_active():
@@ -63,3 +70,10 @@ func _draw() -> void:
 	var p2: Vector2 = get_position_from_touch_number(2)
 
 	draw_line(to_local(p1), to_local(p2), Color.GREEN, 6.0, true)
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body != self:
+		print(body)
+		line_broken = true
+	
