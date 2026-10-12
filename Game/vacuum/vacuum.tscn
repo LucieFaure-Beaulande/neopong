@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://dx7l1r5ohgorg" path="res://Game/vacuum/vacuum_raycast.gd" id="2_y0ycr"]
 
 [node name="Vacuum" type="Node2D" unique_id=1938523004]
-rotation = -1.5707964
 script = ExtResource("1_qq0q7")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=566817876]

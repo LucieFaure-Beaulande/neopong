@@ -19,7 +19,7 @@ func _physics_process(delta: float) -> void:
 			previous_collider = collider
 			previous_collider.pull_started.emit()
 			var hit_pos = get_collision_point()
-			collider.pull(hit_pos.x, global_rotation)
+			collider.pull(hit_pos.y, global_rotation)
 	elif previous_collider != null:
 			previous_collider.pull_finished.emit()
 			previous_collider = null
