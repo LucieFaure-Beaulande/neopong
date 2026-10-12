@@ -2,8 +2,8 @@ extends PrivateTouchZone
 
 signal vacuum_enabled(enabled:bool)
 
-@export var nb_fingers_for_base: int = 4
-@export var nb_fingers_for_aim: int = 2
+@export var nb_fingers_for_base: int = 1
+@export var nb_fingers_for_aim: int = 1
 
 @onready var vacuum: Node2D = $Vacuum
 
