@@ -20,6 +20,7 @@ position = Vector2(0, 720)
 rotation = -1.5707964
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1737327288]
+visible = false
 offset_right = 720.0
 offset_bottom = 640.0
 mouse_filter = 1
@@ -27,6 +28,7 @@ color = Color(1, 0.5904081, 0.5299569, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect2" type="ColorRect" parent="." unique_id=1419195896]
+visible = false
 offset_top = 640.0
 offset_right = 720.0
 offset_bottom = 1280.0
@@ -42,12 +44,13 @@ position = Vector2(362, 193)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Slingshot" unique_id=1234964609]
 position = Vector2(361.75, 1133.5)
 shape = SubResource("RectangleShape2D_43rjr")
+debug_color = Color(0.7375592, 0.46834207, 0.031818468, 0.41960785)
 
 [node name="VacuumZone" parent="." unique_id=1960340670 instance=ExtResource("1_qj6ra")]
 position = Vector2(360, 1143)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZone" unique_id=728963688]
-position = Vector2(-3, 2)
+position = Vector2(-6.0000176, -988)
 shape = SubResource("RectangleShape2D_uhwdc")
 debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
 
