@@ -4,6 +4,8 @@
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_5wdvn"]
 
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_5axvk"]
+
 [node name="Rebondisseur" type="Area2D" unique_id=588083500]
 collision_layer = 128
 collision_mask = 128
@@ -16,5 +18,15 @@ metadata/_custom_type_script = "uid://cbynmiekcj4to"
 shape = SubResource("SegmentShape2D_5wdvn")
 debug_color = Color(0, 0, 0, 0.41960785)
 
+
 [node name="Line2D" type="Line2D" parent="AnimatableBody2D" unique_id=22118889]
 default_color = Color(0.8117647, 0, 0.34117648, 1)
+
+[node name="Area2D" type="Area2D" parent="AnimatableBody2D" unique_id=558232446]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/Area2D" unique_id=874427324]
+shape = SubResource("SegmentShape2D_5axvk")
+
+[connection signal="body_entered" from="AnimatableBody2D/Area2D" to="." method="_on_area_2d_body_entered"]

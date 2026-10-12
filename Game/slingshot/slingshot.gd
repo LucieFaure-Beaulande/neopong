@@ -79,6 +79,9 @@ func lock_anchors(puller_start_pos: Vector2):
 	
 	anchor_id_1 = distances[0]["id"]
 	anchor_id_2 = distances[1]["id"]
+	
+func screen_to_local(node: Node2D, screen_pos: Vector2) -> Vector2:
+	return node.get_global_transform_with_canvas().affine_inverse() * screen_pos
 
 func update_visuals():
 	var pull_pos = get_position_from_touch_number(puller_id)
@@ -90,15 +93,24 @@ func update_visuals():
 	line_trajectory.visible = true
 	
 	# Draw the V-shape of the slingshot
-	line_left.points = [a1_pos, pull_pos]
-	line_right.points = [a2_pos, pull_pos]
+	line_left.points = [
+		screen_to_local(line_left, a1_pos),
+		screen_to_local(line_left, pull_pos)
+	]
+	line_right.points = [
+		screen_to_local(line_right, a2_pos),
+		screen_to_local(line_right, pull_pos)
+	]
 	
 	# Calculate and draw the forward trajectory line
 	var midpoint = (a1_pos + a2_pos) / 2.0
 	var pull_vector = midpoint - pull_pos
 	var trajectory_end = midpoint + (pull_vector * 2.0) # Multiply to extend the line forward
 	
-	line_trajectory.points = [midpoint, trajectory_end]
+	line_trajectory.points = [
+		screen_to_local(line_trajectory, midpoint),
+		screen_to_local(line_trajectory, trajectory_end)
+	]
 
 func fire_projectile(pull_pos:Vector2):
 	
@@ -119,7 +131,8 @@ func fire_projectile(pull_pos:Vector2):
 	get_tree().current_scene.add_child(new_projectile)
 
 	# 3. Set its starting position to the center of the slingshot base
-	new_projectile.global_position = midpoint
+	var world_midpoint = get_canvas_transform().affine_inverse() * midpoint
+	new_projectile.global_position = world_midpoint
 
 	# 4. Fire it
 	new_projectile.apply_central_impulse(impulse_force)

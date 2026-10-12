@@ -2,11 +2,9 @@
 
 [ext_resource type="Texture2D" uid="uid://ioxodhhnvrbk" path="res://Game/slingshot/assets/trajectory_dash_line.png" id="1_2vby6"]
 [ext_resource type="Script" uid="uid://ns6s3mn2ncxi" path="res://Game/slingshot/slingshot.gd" id="1_wkq5f"]
-[ext_resource type="PackedScene" uid="uid://v0s1jbtupl54" path="res://Game/slingshot/slingshot_projectile.tscn" id="2_xxrtu"]
 
 [node name="Slingshot" type="Area2D" unique_id=518190497]
 script = ExtResource("1_wkq5f")
-projectile_scene = ExtResource("2_xxrtu")
 metadata/_custom_type_script = "uid://cbynmiekcj4to"
 
 [node name="LineLeft" type="Line2D" parent="." unique_id=2131308657]

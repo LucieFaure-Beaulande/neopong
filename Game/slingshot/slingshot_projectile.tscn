@@ -5,13 +5,14 @@ friction = 0.0
 bounce = 1.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_43rjr"]
-radius = 20.0
-height = 40.0
+radius = 10.0
+height = 20.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_3j5br"]
-radius = 20.024984
 
 [node name="SlingshotProjectile" type="RigidBody2D" unique_id=627719562 groups=["projectile"]]
+collision_layer = 4
+collision_mask = 4
 physics_material_override = SubResource("PhysicsMaterial_71ro0")
 gravity_scale = 0.0
 

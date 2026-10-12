@@ -1,6 +1,7 @@
 extends PrivateTouchZone
 
 signal vacuum_enabled(enabled:bool)
+signal collision_mask_updated(mask:int)
 
 @export var nb_fingers_for_base: int = 1
 @export var nb_fingers_for_aim: int = 1
@@ -9,6 +10,7 @@ signal vacuum_enabled(enabled:bool)
 
 func _ready() -> void:
 	reset()
+	collision_mask_updated.emit(collision_mask)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -54,6 +56,3 @@ func update_vacuum_aim() -> void:
 func reset() -> void:
 	vacuum_enabled.emit(false)
 	vacuum.visible = false
-
-func _on_vacuum_enabled(enabled: bool) -> void:
-	pass # Replace with function body.

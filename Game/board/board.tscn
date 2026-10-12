@@ -27,16 +27,18 @@ size = Vector2(1314, 29)
 [node name="Board" type="Node2D" unique_id=1187871317]
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1737327288]
-offset_right = 640.0
-offset_bottom = 720.0
+visible = false
+offset_right = 720.0
+offset_bottom = 640.0
 mouse_filter = 1
 color = Color(1, 0.5904081, 0.5299569, 1)
 metadata/_edit_use_anchors_ = true
 
 [node name="ColorRect2" type="ColorRect" parent="." unique_id=1419195896]
-offset_left = 640.0
-offset_right = 1280.0
-offset_bottom = 720.0
+visible = false
+offset_top = 640.0
+offset_right = 720.0
+offset_bottom = 1280.0
 mouse_filter = 1
 color = Color(0.26892668, 0.48667043, 1, 1)
 metadata/_edit_use_anchors_ = true
@@ -52,10 +54,12 @@ collision_layer = 5
 collision_mask = 5
 
 [node name="Slingshot" parent="." unique_id=1398244917 instance=ExtResource("2_vsefh")]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Slingshot" unique_id=1234964609]
 position = Vector2(125.375, 357)
 shape = SubResource("RectangleShape2D_43rjr")
+debug_color = Color(0.7375592, 0.46834207, 0.031818468, 0.41960785)
 
 [node name="VacuumZone" parent="." unique_id=1960340670 instance=ExtResource("1_qj6ra")]
 position = Vector2(1115, 345)
@@ -63,7 +67,7 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZone" unique_id=728963688]
-position = Vector2(38, 19)
+position = Vector2(-6.0000176, -988)
 shape = SubResource("RectangleShape2D_uhwdc")
 debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
 
@@ -82,13 +86,17 @@ shape = SubResource("RectangleShape2D_wxr5f")
 debug_color = Color(0.16078432, 0.9411765, 0, 0.41960785)
 
 [node name="BorderLeft" type="StaticBody2D" parent="." unique_id=594068700]
+collision_layer = 5
+collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_43rjr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderLeft" unique_id=1776507818]
 position = Vector2(647, -5.5)
 shape = SubResource("RectangleShape2D_3j5br")
 
-[node name="BorderRight" type="StaticBody2D" parent="." unique_id=402325207]
+[node name="BorderRight" type="StaticBody2D" parent="BorderLeft" unique_id=402325207]
+collision_layer = 5
+collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_43rjr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderRight" unique_id=743419606]

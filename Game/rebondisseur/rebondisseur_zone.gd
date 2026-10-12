@@ -11,17 +11,24 @@ const COLOR_BROKEN := Color.RED
 var line_broken: bool = false
 
 @onready var collision_shape: CollisionShape2D = $AnimatableBody2D/CollisionShape2D
+
 @onready var line2d: Line2D = $AnimatableBody2D/Line2D
+
+@onready var area_shape: CollisionShape2D = $AnimatableBody2D/Area2D/CollisionShape2D
+
 
 var _segment: SegmentShape2D
 var _broken_timer: float = 0.0
 var _broken_p1: Vector2 = Vector2.ZERO
 var _broken_p2: Vector2 = Vector2.ZERO
 
+@export var _rect_width: int = 20
+
 func _ready() -> void:
 	# Création du segment physique
 	_segment = SegmentShape2D.new()
 	collision_shape.shape = _segment
+	area_shape.shape = _segment
 	collision_shape.disabled = true
 
 	# Style visuel de la ligne
@@ -68,6 +75,7 @@ func _update_collision() -> void:
 		# On remet le segment à zéro pour ne pas garder une "ligne fantôme" (visible avec Debug > Collision Shapes)
 		_segment.a = Vector2.ZERO
 		_segment.b = Vector2.ZERO
+		area_shape.set_deferred("disabled", true)
 		return
 
 	var p1: Vector2 = get_position_from_touch_number(1)
@@ -75,7 +83,9 @@ func _update_collision() -> void:
 
 	_segment.a = collision_shape.to_local(p1)
 	_segment.b = collision_shape.to_local(p2)
+	
 	collision_shape.set_deferred("disabled", false)
+	area_shape.set_deferred("disabled", false)
 
 func _update_visual_line(delta: float) -> void:
 	# Ligne active : verte, qui suit les doigts
@@ -106,3 +116,10 @@ func _update_visual_line(delta: float) -> void:
 	# Plus rien à afficher : on vide ET on cache complètement la ligne
 	line2d.clear_points()
 	line2d.visible = false
+	draw_line(to_local(p1), to_local(p2), Color.GREEN, 6.0, true)
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body != self:
+		print(body)
+		line_broken = true
