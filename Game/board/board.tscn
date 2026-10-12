@@ -3,15 +3,20 @@
 [ext_resource type="PackedScene" uid="uid://8kiwc2w1jjdf" path="res://Game/vacuum/vacuum_zone.tscn" id="1_qj6ra"]
 [ext_resource type="PackedScene" uid="uid://bc3kym46wht34" path="res://Game/goalzone/goalzone.tscn" id="2_uliie"]
 [ext_resource type="PackedScene" uid="uid://7m6r7da5rdw0" path="res://Game/rebondisseur/RebondisseurZone.tscn" id="3_vsefh"]
+[ext_resource type="PackedScene" uid="uid://bqpl5o1ki1st4" path="res://Game/slingshot/slingshot.tscn" id="2_vsefh"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_43rjr"]
+size = Vector2(716.5, 293)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uhwdc"]
 size = Vector2(759, 314)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vsefh"]
 size = Vector2(756, 356)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wxr5f"]
 size = Vector2(756, 356)
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43rjr"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3j5br"]
+size = Vector2(21, 1296)
 
 [node name="Board" type="Node2D" unique_id=1187871317]
 position = Vector2(0, 720)
@@ -35,6 +40,12 @@ metadata/_edit_use_anchors_ = true
 [node name="Goalzone" parent="." unique_id=586597398 instance=ExtResource("2_uliie")]
 position = Vector2(362, 193)
 
+[node name="Slingshot" parent="." unique_id=1398244917 instance=ExtResource("2_vsefh")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slingshot" unique_id=1234964609]
+position = Vector2(361.75, 1133.5)
+shape = SubResource("RectangleShape2D_43rjr")
+
 [node name="VacuumZone" parent="." unique_id=1960340670 instance=ExtResource("1_qj6ra")]
 position = Vector2(360, 1143)
 
@@ -49,10 +60,21 @@ debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
 position = Vector2(358, 820)
 shape = SubResource("RectangleShape2D_vsefh")
 debug_color = Color(0.16044924, 0.94135463, 3.080368e-06, 0.41960785)
-
 [node name="RebondisseurZoneRouge" parent="." unique_id=588083500 instance=ExtResource("3_vsefh")]
-
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="RebondisseurZoneRouge" unique_id=1087021124]
 position = Vector2(357.99997, 463.00003)
 shape = SubResource("RectangleShape2D_wxr5f")
 debug_color = Color(0.16078432, 0.9411765, 0, 0.41960785)
+[node name="BorderLeft" type="StaticBody2D" parent="." unique_id=594068700]
+physics_material_override = SubResource("PhysicsMaterial_43rjr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderLeft" unique_id=1776507818]
+position = Vector2(0.5, 638)
+shape = SubResource("RectangleShape2D_3j5br")
+
+[node name="BorderRight" type="StaticBody2D" parent="BorderLeft" unique_id=402325207]
+physics_material_override = SubResource("PhysicsMaterial_43rjr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BorderLeft/BorderRight" unique_id=743419606]
+position = Vector2(722, 638)
+shape = SubResource("RectangleShape2D_3j5br")

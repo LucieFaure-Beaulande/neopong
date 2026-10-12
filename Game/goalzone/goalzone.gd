@@ -15,6 +15,7 @@ var is_pulled: bool = false
 func _ready() -> void:
 	pull_started.connect(_on_pull_started)
 	pull_finished.connect(_on_pull_finished)
+	body_entered.connect(_on_body_entered)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -44,6 +45,11 @@ func _on_pull_started() -> void:
 	
 func _on_pull_finished() -> void:
 	is_pulled = false
+	
+func _on_body_entered(body: Node2D):
+	# Check if the object entering the goal is the slingshot projectile
+	if body.is_in_group("projectile"):
+		body.queue_free() # Deletes the slingshot projectile from the game
 	
 func _draw() -> void:
 	var color = Color.DIM_GRAY
