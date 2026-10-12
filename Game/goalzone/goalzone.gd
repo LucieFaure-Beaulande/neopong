@@ -56,8 +56,9 @@ func pull(origin: int, angle: float) -> void:
 	var fixed_origin := origin - 360 # half of the width because the polygon's center is 0
 	# We create a vector that we then rotate
 	# this vector is used to create an "offset" that aligns with the vacuum's angle
-	var pull_vector: Vector2 = Vector2(-max_pull_distance, 0).rotated(angle)
-	target_dot_position = pull_vector + Vector2(fixed_origin, 0)
+	var pull_vector:Vector2 = Vector2(0,max_pull_distance).rotated(angle)
+	target_dot_position = pull_vector + Vector2(fixed_origin,0)
+
 
 func _on_pull_started() -> void:
 	is_pulled = true

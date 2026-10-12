@@ -7,6 +7,7 @@ size = Vector2(900, 20)
 
 [node name="Goalzone" type="Area2D" unique_id=586597398]
 z_index = 1
+rotation = 1.5707964
 script = ExtResource("1_8robk")
 metadata/_custom_type_script = "uid://b5wqkuktxja1s"
 
