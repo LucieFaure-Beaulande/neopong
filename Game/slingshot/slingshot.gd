@@ -1,4 +1,5 @@
-extends Node2D
+extends PrivateTouchZone
+
 
 @onready var line_left = $LineLeft
 @onready var line_right = $LineRight
