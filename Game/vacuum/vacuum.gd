@@ -5,3 +5,8 @@ extends Node2D
 
 func _on_vacuum_zone_vacuum_enabled(enabled: bool) -> void:
 	ray_cast_2d.enabled = enabled
+	
+
+
+func _on_vacuum_zone_collision_mask_updated(mask: int) -> void:
+	ray_cast_2d.collision_mask = mask

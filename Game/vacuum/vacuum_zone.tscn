@@ -9,4 +9,5 @@ metadata/_custom_type_script = "uid://cbynmiekcj4to"
 
 [node name="Vacuum" parent="." unique_id=1938523004 instance=ExtResource("2_hsjx8")]
 
+[connection signal="collision_mask_updated" from="." to="Vacuum" method="_on_vacuum_zone_collision_mask_updated"]
 [connection signal="vacuum_enabled" from="." to="Vacuum" method="_on_vacuum_zone_vacuum_enabled"]
