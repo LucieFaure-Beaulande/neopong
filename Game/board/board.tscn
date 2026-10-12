@@ -50,6 +50,7 @@ collision_mask = 3
 position = Vector2(1032, 351)
 collision_layer = 5
 collision_mask = 5
+team = 1
 
 [node name="Slingshot" parent="." unique_id=1398244917 instance=ExtResource("2_vsefh")]
 
@@ -91,20 +92,16 @@ physics_material_override = SubResource("PhysicsMaterial_43rjr")
 position = Vector2(647, -5.5)
 shape = SubResource("RectangleShape2D_3j5br")
 
-[node name="BorderRight" type="StaticBody2D" parent="BorderLeft" unique_id=402325207]
+[node name="BorderRight" type="StaticBody2D" parent="." unique_id=402325207]
 collision_layer = 5
 collision_mask = 5
 physics_material_override = SubResource("PhysicsMaterial_43rjr")
 
-[node name="BorderRight#CollisionShape2D" type="CollisionShape2D" parent="." unique_id=743419606]
+[node name="BorderRight#CollisionShape2D" type="CollisionShape2D" parent="BorderRight" unique_id=743419606]
 position = Vector2(637, 723)
 shape = SubResource("RectangleShape2D_3j5br")
 
 [node name="Balle" parent="." unique_id=558025850 instance=ExtResource("5_o5hii")]
-position = Vector2(364.99997, 641)
-
-[node name="GoalzoneRed" parent="." unique_id=1760812088 instance=ExtResource("2_uliie")]
-position = Vector2(370.99994, 1076)
-team = 1
+position = Vector2(646, 354)
 
 [node name="Ux" parent="." unique_id=1062955609 instance=ExtResource("6_l62x2")]

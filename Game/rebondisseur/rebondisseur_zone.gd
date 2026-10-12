@@ -116,7 +116,6 @@ func _update_visual_line(delta: float) -> void:
 	# Plus rien à afficher : on vide ET on cache complètement la ligne
 	line2d.clear_points()
 	line2d.visible = false
-	draw_line(to_local(p1), to_local(p2), Color.GREEN, 6.0, true)
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
