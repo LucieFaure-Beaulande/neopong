@@ -1,10 +1,9 @@
 extends PrivateTouchZone
-
+var projectile_preload = preload("res://Game/slingshot/slingshot_projectile.tscn")
 
 @onready var line_left = $LineLeft
 @onready var line_right = $LineRight
 @onready var line_trajectory = $LineTrajectory
-@export var projectile_scene: PackedScene
 @export var slingshot_power_multiplier: float = 5.0
 @export var max_pull_distance: float = 300.0
 
@@ -17,24 +16,16 @@ var anchor_id_2 = -1
 func _ready():
 	clear_slingshot_visuals()
 
-func _input(event):
-	if event is InputEventScreenTouch:
-		if event.pressed:
-			active_touches[event.index] = event.position
-			evaluate_touch_state(event.index, event.position)
-		else:
-			active_touches.erase(event.index)
-			if event.index == puller_id:
-				fire_projectile()
-			elif event.index in base_touch_ids:
-				reset_slingshot_state()
-				
-	elif event is InputEventScreenDrag:
-		if active_touches.has(event.index):
-			active_touches[event.index] = event.position
-
 func _process(_delta):
-	if puller_id != -1 and active_touches.has(puller_id):
+	if touch_order_dict.size() == 5 and base_touch_ids.is_empty():
+		base_touch_ids = touch_order_dict.keys()
+	elif touch_order_dict.size() >= 6 and not base_touch_ids.is_empty() and puller_id == -1:
+		var touch_number: int = touch_order_dict.keys().max()
+		if is_valid_puller_position(get_position_from_touch_number(touch_number)):
+			puller_id = touch_number
+			lock_anchors(get_position_from_touch_number(touch_number))
+	
+	if puller_id != -1 and touch_order_dict.keys().has(puller_id):
 		update_visuals()
 		
 func is_valid_puller_position(pos: Vector2) -> bool:
@@ -45,8 +36,8 @@ func is_valid_puller_position(pos: Vector2) -> bool:
 
 	# Find the outermost boundaries of the 5 base fingers
 	for id in base_touch_ids:
-		if active_touches.has(id):
-			var touch_pos = active_touches[id]
+		if touch_order_dict.keys().has(id):
+			var touch_pos = get_position_from_touch_number(id)
 			min_x = min(min_x, touch_pos.x)
 			max_x = max(max_x, touch_pos.x)
 			min_y = min(min_y, touch_pos.y)
@@ -66,11 +57,11 @@ func is_valid_puller_position(pos: Vector2) -> bool:
 
 func evaluate_touch_state(new_touch_index: int, new_touch_pos: Vector2):
 	# If we hit 5 touches and haven't locked a base yet, lock these 5 IDs
-	if active_touches.size() == 5 and base_touch_ids.is_empty():
-		base_touch_ids = active_touches.keys()
+	if touch_order_dict.size() == 5 and base_touch_ids.is_empty():
+		base_touch_ids = touch_order_dict.keys()
 		
 	# If the base is locked and a 6th touch appears, it's the puller
-	elif active_touches.size() >= 6 and not base_touch_ids.is_empty() and puller_id == -1:
+	elif touch_order_dict.size() >= 6 and not base_touch_ids.is_empty() and puller_id == -1:
 		if is_valid_puller_position(new_touch_pos):
 			puller_id = new_touch_index
 			lock_anchors(new_touch_pos)
@@ -79,8 +70,8 @@ func lock_anchors(puller_start_pos: Vector2):
 	# Create an array of dictionaries containing the base touch IDs and their distances to the puller
 	var distances = []
 	for id in base_touch_ids:
-		if active_touches.has(id):
-			var dist = puller_start_pos.distance_to(active_touches[id])
+		if touch_order_dict.keys().has(id):
+			var dist = puller_start_pos.distance_to(get_position_from_touch_number(id))
 			distances.append({"id": id, "distance": dist})
 			
 	# Sort to find the two closest points (thumb and index)
@@ -90,9 +81,9 @@ func lock_anchors(puller_start_pos: Vector2):
 	anchor_id_2 = distances[1]["id"]
 
 func update_visuals():
-	var pull_pos = active_touches[puller_id]
-	var a1_pos = active_touches[anchor_id_1]
-	var a2_pos = active_touches[anchor_id_2]
+	var pull_pos = get_position_from_touch_number(puller_id)
+	var a1_pos = get_position_from_touch_number(anchor_id_1)
+	var a2_pos = get_position_from_touch_number(anchor_id_2)
 	
 	line_left.visible = true
 	line_right.visible = true
@@ -109,15 +100,10 @@ func update_visuals():
 	
 	line_trajectory.points = [midpoint, trajectory_end]
 
-func fire_projectile():
-	if not projectile_scene:
-		print("Error: Projectile scene not assigned in Inspector!")
-		reset_slingshot_state()
-		return
-
-	var pull_pos = active_touches[puller_id]
-	var a1_pos = active_touches[anchor_id_1]
-	var a2_pos = active_touches[anchor_id_2]
+func fire_projectile(pull_pos:Vector2):
+	
+	var a1_pos = get_position_from_touch_number(anchor_id_1)
+	var a2_pos = get_position_from_touch_number(anchor_id_2)
 
 	var midpoint = (a1_pos + a2_pos) / 2.0
 	var pull_vector = midpoint - pull_pos
@@ -127,7 +113,7 @@ func fire_projectile():
 	var impulse_force = direction * distance * slingshot_power_multiplier
 
 	# 1. Instantiate the projectile
-	var new_projectile = projectile_scene.instantiate() as RigidBody2D
+	var new_projectile = projectile_preload.instantiate() as RigidBody2D
 
 	# 2. Add it to the main game scene (so it moves independently of the slingshot node)
 	get_tree().current_scene.add_child(new_projectile)
@@ -151,3 +137,10 @@ func clear_slingshot_visuals():
 	line_left.visible = false
 	line_right.visible = false
 	line_trajectory.visible = false
+
+
+func _on_release_touch(touch_number: int, touch_position:Vector2) -> void:
+	if touch_number == puller_id:
+		fire_projectile(touch_position)
+	elif touch_number in base_touch_ids:
+		reset_slingshot_state()

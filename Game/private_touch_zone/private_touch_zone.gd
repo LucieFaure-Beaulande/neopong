@@ -8,6 +8,8 @@ var touch_event_dict:Dictionary[int, Vector2] = {}
 #also tracks the order fingers are placed
 var nb_of_touches:int = 0
 
+signal release_touch(touch_number:int, touch_position:Vector2)
+
 func _ready() -> void:
 	input_pickable = true
 
@@ -21,7 +23,8 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 			#print("touch: ", event.position)
 			print("added ", nb_of_touches)
 		else:
-			
+			release_touch.emit(get_touch_from_event_index(event.index), 
+			touch_event_dict.get(event.index))
 			remove_touch_from_event_index(event.index)
 		
 	if event is InputEventScreenDrag:
