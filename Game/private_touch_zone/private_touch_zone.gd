@@ -21,7 +21,6 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 			#print("touch: ", event.position)
 			print("added ", nb_of_touches)
 		else:
-			
 			remove_touch_from_event_index(event.index)
 		
 	if event is InputEventScreenDrag:

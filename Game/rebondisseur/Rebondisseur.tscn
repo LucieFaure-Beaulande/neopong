@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://4uwh4j8sr181" path="res://Game/rebondisseur/rebondisseur.gd" id="1_lxxns"]
 
-[node name="Rebondisseur" type="Area2D" unique_id=1559738309]
+[node name="Rebondisseur" type="Area2D" unique_id=588083500]
 script = ExtResource("1_lxxns")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=245546964]
+metadata/_custom_type_script = "uid://cbynmiekcj4to"

@@ -7,6 +7,9 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uhwdc"]
 size = Vector2(759, 314)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vsefh"]
+size = Vector2(756, 356)
+
 [node name="Board" type="Node2D" unique_id=1187871317]
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1737327288]
@@ -34,3 +37,8 @@ shape = SubResource("RectangleShape2D_uhwdc")
 debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
 
 [node name="Rebondisseur" parent="." unique_id=302749196 instance=ExtResource("3_vsefh")]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Rebondisseur" unique_id=260065662]
+position = Vector2(358, 820)
+shape = SubResource("RectangleShape2D_vsefh")
+debug_color = Color(0.16044924, 0.94135463, 3.080368e-06, 0.41960785)
