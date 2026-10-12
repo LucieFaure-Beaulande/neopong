@@ -7,6 +7,8 @@
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_5axvk"]
 
 [node name="Rebondisseur" type="Area2D" unique_id=588083500]
+collision_layer = 128
+collision_mask = 128
 script = ExtResource("1_lxxns")
 metadata/_custom_type_script = "uid://cbynmiekcj4to"
 
