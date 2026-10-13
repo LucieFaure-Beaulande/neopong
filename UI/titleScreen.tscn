@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://c5lrq8r70leva"]
+
+[ext_resource type="Texture2D" uid="uid://bcfdnwq3ce1wa" path="res://UI/Sprites/playbtn.png" id="1_hsjr3"]
+[ext_resource type="Script" uid="uid://g82jseulempo" path="res://UI/play.gd" id="1_qvxag"]
+[ext_resource type="Script" uid="uid://sky1v0yae58o" path="res://UI/quit.gd" id="2_onajj"]
+[ext_resource type="Texture2D" uid="uid://cseetwh1najba" path="res://UI/Sprites/quitbtn.png" id="3_bqnt0"]
+[ext_resource type="Texture2D" uid="uid://bc6ikcx3khepc" path="res://UI/Sprites/title.png" id="5_bqnt0"]
+
+[node name="Node2D" type="Node2D" unique_id=358723649]
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=2100951494]
+offset_left = -8.0
+offset_top = -3.0
+offset_right = 729.0
+offset_bottom = 1287.0
+color = Color(0, 0.07450981, 0.13725491, 1)
+
+[node name="Play" type="TextureButton" parent="." unique_id=747780314]
+offset_top = 756.0
+offset_right = 328.0
+offset_bottom = 872.0
+texture_normal = ExtResource("1_hsjr3")
+script = ExtResource("1_qvxag")
+
+[node name="Quit" type="TextureButton" parent="." unique_id=285692169]
+offset_left = 391.0
+offset_top = 756.0
+offset_right = 719.0
+offset_bottom = 872.0
+texture_normal = ExtResource("3_bqnt0")
+script = ExtResource("2_onajj")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1271367454]
+position = Vector2(360, 308)
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("5_bqnt0")
+
+[connection signal="pressed" from="Play" to="Play" method="_on_pressed"]
+[connection signal="pressed" from="Quit" to="Quit" method="_on_pressed"]
