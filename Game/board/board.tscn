@@ -6,6 +6,185 @@
 [ext_resource type="PackedScene" uid="uid://7m6r7da5rdw0" path="res://Game/rebondisseur/RebondisseurZone.tscn" id="3_vsefh"]
 [ext_resource type="PackedScene" uid="uid://mqytp7ivbaq0" path="res://Game/balle/Balle.tscn" id="5_o5hii"]
 [ext_resource type="PackedScene" uid="uid://c77x2loyfbrmn" path="res://Game/ux/UX.tscn" id="6_l62x2"]
+[ext_resource type="Texture2D" uid="uid://c5ipjjd1yerdl" path="res://Game/sprite/border-blue.png" id="7_m44qf"]
+[ext_resource type="Texture2D" uid="uid://dss4xtutrhmhq" path="res://Game/sprite/border-red.png" id="8_huqml"]
+[ext_resource type="Texture2D" uid="uid://cbd2toocbo4ud" path="res://Game/sprite/space-title.png" id="9_ksbtx"]
+[ext_resource type="Texture2D" uid="uid://mwye16ejw80n" path="res://Game/sprite/border-transition.png" id="9_scjrq"]
+[ext_resource type="Texture2D" uid="uid://deycbuhirs54k" path="res://Game/sprite/space-blue.png" id="10_jl6ce"]
+[ext_resource type="Texture2D" uid="uid://c6742fdeo73n5" path="res://Game/sprite/border-red-corner.png" id="10_scjrq"]
+[ext_resource type="Texture2D" uid="uid://3gt4ufxa80x6" path="res://Game/sprite/border-blue-corner.png" id="11_cx5q7"]
+[ext_resource type="Texture2D" uid="uid://d2qgugnrerlqb" path="res://Game/sprite/space-red.png" id="11_ksbtx"]
+[ext_resource type="Texture2D" uid="uid://cu75sbk14wexp" path="res://Game/sprite/space-transition.png" id="12_ljpcf"]
+[ext_resource type="Script" uid="uid://brbyyu7agp3uc" path="res://Game/board/progress_bar.gd" id="16_ljpcf"]
+[ext_resource type="Texture2D" uid="uid://6t2wfobbmsf8" path="res://Game/sprite/aspirateur.png" id="17_gxdqr"]
+[ext_resource type="Script" uid="uid://dvjl1314f2buf" path="res://Game/board/vacuum_button_red.gd" id="19_gwtj2"]
+[ext_resource type="Texture2D" uid="uid://ds0uxdxd41u6i" path="res://Game/sprite/aspirateur-des.png" id="19_v7i47"]
+[ext_resource type="Texture2D" uid="uid://bad7u5o3ygjpu" path="res://Game/sprite/fronde.png" id="21_evq1a"]
+[ext_resource type="Texture2D" uid="uid://c4frycutuixw2" path="res://Game/sprite/fronde-des.png" id="22_s3dvk"]
+[ext_resource type="Script" uid="uid://dcl2f4xss3714" path="res://Game/board/slingshot_button_red.gd" id="23_ipnii"]
+[ext_resource type="Script" uid="uid://bvffhkrei8j30" path="res://Game/board/vacuum_button_blue.gd" id="23_s3dvk"]
+[ext_resource type="Script" uid="uid://sds01hvdy0um" path="res://Game/board/slingshot_button_blue.gd" id="24_ipnii"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_cx5q7"]
+texture = ExtResource("7_m44qf")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gp50h"]
+texture = ExtResource("8_huqml")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jl6ce"]
+texture = ExtResource("9_scjrq")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ksbtx"]
+texture = ExtResource("10_scjrq")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ljpcf"]
+texture = ExtResource("11_cx5q7")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gxdqr"]
+texture = ExtResource("10_jl6ce")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_vjl0s"]
+texture = ExtResource("11_ksbtx")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_gwtj2"]
+texture = ExtResource("12_ljpcf")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_v7i47"]
+texture = ExtResource("9_ksbtx")
+texture_region_size = Vector2i(64, 64)
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+7:0/0 = 0
+8:0/0 = 0
+9:0/0 = 0
+10:0/0 = 0
+11:0/0 = 0
+12:0/0 = 0
+13:0/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+4:1/0 = 0
+7:1/0 = 0
+8:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+13:1/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+12:2/0 = 0
+13:2/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+12:3/0 = 0
+13:3/0 = 0
+0:0/0 = 0
+1:0/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_wbigs"]
+sources/0 = SubResource("TileSetAtlasSource_cx5q7")
+sources/1 = SubResource("TileSetAtlasSource_gp50h")
+sources/2 = SubResource("TileSetAtlasSource_jl6ce")
+sources/3 = SubResource("TileSetAtlasSource_ksbtx")
+sources/4 = SubResource("TileSetAtlasSource_ljpcf")
+sources/5 = SubResource("TileSetAtlasSource_gxdqr")
+sources/6 = SubResource("TileSetAtlasSource_vjl0s")
+sources/7 = SubResource("TileSetAtlasSource_gwtj2")
+sources/8 = SubResource("TileSetAtlasSource_v7i47")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43rjr"]
 size = Vector2(249.25, 700)
@@ -40,6 +219,12 @@ offset_bottom = 720.0
 mouse_filter = 1
 color = Color(0.26892668, 0.48667043, 1, 1)
 metadata/_edit_use_anchors_ = true
+
+[node name="TileMap" type="TileMap" parent="." unique_id=1074608833]
+position = Vector2(8, 0)
+tile_set = SubResource("TileSet_wbigs")
+format = 2
+layer_0/tile_data = PackedInt32Array(15, 1, 0, 19, 1, 0, 23, 1, 0, 27, 1, 0, 31, 1, 0, 35, 1, 0, 39, 2, 0, 43, 0, 0, 47, 0, 0, 51, 0, 0, 55, 0, 0, 59, 0, 0, 63, 0, 0, 11, 1, 0, 7, 1, 0, 3, 1, 0, 65535, 3, 0, 327679, 1, 1610612736, 589823, 1, 1610612736, 851967, 1, 1610612736, 1114111, 1, 1610612736, 1376255, 1, 1610612736, 1638399, 1, 1610612736, 1900543, 1, 1610612736, 2162687, 1, 1610612736, 2424831, 1, 1610612736, 2686975, 1, 1610612736, 2949119, 3, 536870912, 2883587, 1, 536870912, 2883591, 1, 536870912, 2883595, 1, 536870912, 2883599, 1, 536870912, 2883603, 1, 536870912, 2883607, 1, 536870912, 2883611, 1, 536870912, 2883615, 1, 536870912, 2883619, 1, 536870912, 2883623, 2, 536870912, 2883627, 0, 536870912, 2883631, 0, 536870912, 2883635, 0, 536870912, 2883639, 0, 536870912, 2883643, 0, 536870912, 2883647, 0, 536870912, 2883651, 0, 536870912, 2883655, 0, 536870912, 2883659, 0, 536870912, 2883663, 4, 536870912, 67, 0, 0, 71, 0, 0, 75, 0, 0, 2621519, 0, 1342177280, 2359375, 0, 1342177280, 2097231, 0, 1342177280, 1835087, 0, 1342177280, 1572943, 0, 1342177280, 1310799, 0, 1342177280, 1048655, 0, 1342177280, 786511, 0, 1342177280, 524367, 0, 1342177280, 262223, 0, 1342177280, 79, 4, 0, 262219, 5, 0, 524363, 5, 0, 262215, 5, 0, 262211, 5, 0, 262207, 5, 0, 262203, 5, 0, 262199, 5, 0, 262195, 5, 0, 262191, 5, 0, 262187, 5, 0, 262183, 7, 0, 524327, 7, 0, 262179, 6, 0, 262175, 6, 0, 262171, 6, 0, 262167, 6, 0, 262163, 6, 0, 262159, 6, 0, 262155, 6, 0, 262151, 6, 0, 262147, 6, 0, 524291, 6, 0, 524295, 6, 0, 524299, 6, 0, 524303, 6, 0, 524307, 6, 0, 524311, 6, 0, 524315, 6, 0, 524319, 6, 0, 524323, 6, 0, 786435, 6, 0, 786439, 6, 0, 786443, 6, 0, 786447, 6, 0, 786451, 6, 0, 1048579, 6, 0, 1310723, 6, 0, 1572867, 6, 0, 1835011, 6, 0, 2097155, 6, 0, 2359299, 6, 0, 2621443, 6, 0, 2621447, 6, 0, 2621451, 6, 0, 2621455, 6, 0, 2621459, 6, 0, 2621463, 6, 0, 2621467, 6, 0, 2621471, 6, 0, 2621475, 6, 0, 2621479, 7, 0, 2359335, 7, 0, 2359331, 6, 0, 2359327, 6, 0, 2359323, 6, 0, 2359319, 6, 0, 2359315, 6, 0, 2359311, 6, 0, 2359307, 6, 0, 2359303, 6, 0, 2097159, 6, 0, 2097163, 6, 0, 2097167, 6, 0, 2097171, 6, 0, 2097175, 6, 0, 1835015, 6, 0, 1835019, 6, 0, 1835023, 6, 0, 1835027, 6, 0, 1572871, 6, 0, 1572875, 6, 0, 1572879, 6, 0, 1310735, 6, 0, 1048595, 6, 0, 1048591, 6, 0, 1048587, 6, 0, 1048583, 6, 0, 1310727, 6, 0, 1310731, 6, 0, 786455, 6, 0, 2621483, 5, 0, 2621487, 5, 0, 2621491, 5, 0, 2621495, 5, 0, 2621515, 5, 0, 2621511, 5, 0, 2621507, 5, 0, 2621503, 5, 0, 2621499, 5, 0, 2359371, 5, 0, 2097227, 5, 0, 1835083, 5, 0, 2359367, 5, 0, 2359363, 5, 0, 2359359, 5, 0, 2359355, 5, 0, 2359351, 5, 0, 2359339, 5, 0, 2359343, 5, 0, 2359347, 5, 0, 2097223, 5, 0, 2097219, 5, 0, 2097215, 5, 0, 2097211, 5, 0, 1572939, 5, 0, 1310795, 5, 0, 1048651, 5, 0, 786507, 5, 0, 524359, 5, 0, 524355, 5, 0, 524351, 5, 0, 524347, 5, 0, 524343, 5, 0, 524339, 5, 0, 524335, 5, 0, 524331, 5, 0, 786503, 5, 0, 786499, 5, 0, 786495, 5, 0, 786491, 5, 0, 786487, 5, 0, 1048647, 5, 0, 1048643, 5, 0, 1048639, 5, 0, 1048635, 5, 0, 1310791, 5, 0, 1572935, 5, 0, 1835079, 5, 0, 1835075, 5, 0, 1572931, 5, 0, 1310787, 5, 0, 1310783, 5, 0, 1572927, 5, 0, 1835071, 5, 0, 2097207, 5, 0, 1835067, 5, 0, 1310739, 6, 0, 1048599, 6, 0, 786459, 6, 0, 786463, 6, 0, 786467, 6, 0, 1048611, 6, 0, 1048607, 6, 0, 1048603, 6, 0, 1310743, 6, 0, 1572883, 6, 0, 1572887, 6, 0, 1835031, 6, 0, 2097179, 6, 0, 2097183, 6, 0, 2097187, 6, 0, 1835043, 6, 0, 1835039, 6, 0, 1835035, 6, 0, 1572891, 6, 0, 1310747, 6, 0, 1310751, 6, 0, 1572895, 6, 0, 1310755, 6, 0, 2097191, 7, 0, 1835047, 7, 0, 1572903, 7, 0, 1310759, 7, 0, 1048615, 7, 0, 786471, 7, 0, 1572899, 6, 0, 2097195, 5, 0, 2097199, 5, 0, 2097203, 5, 0, 1835063, 5, 0, 1572923, 5, 0, 1310779, 5, 0, 1048631, 5, 0, 786483, 5, 0, 786479, 5, 0, 786475, 5, 0, 1048619, 5, 0, 1048623, 5, 0, 1048627, 5, 0, 1310775, 5, 0, 1310771, 5, 1342177280, 1310767, 5, 1342177280, 1310763, 5, 1342177280, 1572907, 5, 1342177280, 1572911, 5, 1342177280, 1572915, 5, 1342177280, 1572919, 5, 1342177280, 1835059, 5, 1342177280, 1835055, 5, 1342177280, 1835051, 5, 1342177280, 1441825, 8, 0, 1441826, 8, 0)
 
 [node name="GoalzoneRed" parent="." unique_id=586597398 instance=ExtResource("2_uliie")]
 position = Vector2(252, 352)
@@ -104,4 +289,74 @@ shape = SubResource("RectangleShape2D_3j5br")
 [node name="Balle" parent="." unique_id=558025850 instance=ExtResource("5_o5hii")]
 position = Vector2(646, 354)
 
-[node name="Ux" parent="." unique_id=1062955609 instance=ExtResource("6_l62x2")]
+[node name="Ux" parent="." unique_id=1062955609 node_paths=PackedStringArray("progress_bar_red", "progress_bar_blue") instance=ExtResource("6_l62x2")]
+progress_bar_red = NodePath("../ProgressBarRed")
+progress_bar_blue = NodePath("../ProgressBarBlue")
+
+[node name="ProgressBarRed" type="ProgressBar" parent="." unique_id=575213242]
+offset_left = 25.0
+offset_top = 33.159027
+offset_right = 673.2513
+offset_bottom = 71.07187
+rotation = 1.5707964
+max_value = 2000.0
+rounded = true
+script = ExtResource("16_ljpcf")
+
+[node name="ProgressBarBlue" type="ProgressBar" parent="." unique_id=1294379502]
+offset_left = 1255.0
+offset_top = 683.0
+offset_right = 1903.2513
+offset_bottom = 720.91284
+rotation = -1.5707964
+max_value = 2000.0
+rounded = true
+script = ExtResource("16_ljpcf")
+
+[node name="VacuumButtonRed" type="TextureButton" parent="." unique_id=1870149725 node_paths=PackedStringArray("progressBarRed", "slingshotButtonRed")]
+offset_left = 85.0
+offset_top = 249.0
+offset_right = 139.0
+offset_bottom = 303.0
+rotation = 1.5707964
+texture_normal = ExtResource("17_gxdqr")
+texture_disabled = ExtResource("19_v7i47")
+script = ExtResource("19_gwtj2")
+progressBarRed = NodePath("../ProgressBarRed")
+slingshotButtonRed = NodePath("../SlingshotButtonRed")
+
+[node name="SlingshotButtonRed" type="TextureButton" parent="." unique_id=182699997 node_paths=PackedStringArray("progressBarRed", "vacuumButtonRed")]
+offset_left = 85.0
+offset_top = 411.0
+offset_right = 139.0
+offset_bottom = 465.0
+rotation = 1.5707964
+texture_normal = ExtResource("21_evq1a")
+texture_disabled = ExtResource("22_s3dvk")
+script = ExtResource("23_ipnii")
+progressBarRed = NodePath("../ProgressBarRed")
+vacuumButtonRed = NodePath("../VacuumButtonRed")
+
+[node name="VacuumButtonBlue" type="TextureButton" parent="." unique_id=572049284 node_paths=PackedStringArray("progressBarBlue", "slingshotButtonBlue")]
+offset_left = 1192.0
+offset_top = 465.0
+offset_right = 1246.0
+offset_bottom = 519.0
+rotation = -1.5707964
+texture_normal = ExtResource("17_gxdqr")
+texture_disabled = ExtResource("19_v7i47")
+script = ExtResource("23_s3dvk")
+progressBarBlue = NodePath("../ProgressBarBlue")
+slingshotButtonBlue = NodePath("../SlingshotButtonBlue")
+
+[node name="SlingshotButtonBlue" type="TextureButton" parent="." unique_id=322878962 node_paths=PackedStringArray("progressBarBlue", "vacuumButtonBlue")]
+offset_left = 1192.0
+offset_top = 303.0
+offset_right = 1246.0
+offset_bottom = 357.0
+rotation = -1.5707964
+texture_normal = ExtResource("21_evq1a")
+texture_disabled = ExtResource("22_s3dvk")
+script = ExtResource("24_ipnii")
+progressBarBlue = NodePath("../ProgressBarBlue")
+vacuumButtonBlue = NodePath("../VacuumButtonBlue")

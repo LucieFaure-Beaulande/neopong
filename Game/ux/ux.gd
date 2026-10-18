@@ -9,6 +9,9 @@ var scores := {
 }
 var labels := {}
 
+@export var progress_bar_red: ProgressBar
+@export var progress_bar_blue: ProgressBar
+
 func _ready() -> void:
 	_build_ui()
 	_connect_zones.call_deferred()
@@ -39,6 +42,10 @@ func _connect_zones() -> void:
 
 func _on_goal_scored(team: int) -> void:
 	scores[team] += 1
+	if(team == 0):
+		progress_bar_red.value += 300
+	else:
+		progress_bar_blue.value += 300
 	_refresh(team)
 
 func _refresh(team: int) -> void:
