@@ -1,7 +1,7 @@
 extends Node2D
 
 # Total duration of a game, in seconds (3 minutes by default)
-@export var game_duration: float = 60.0
+@export var game_duration: float = 180.0
 
 @onready var ball: Ball = $Balle
 @onready var ux: ScoreBoard = $Ux
