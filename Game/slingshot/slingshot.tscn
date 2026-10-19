@@ -2,6 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://ioxodhhnvrbk" path="res://Game/slingshot/assets/trajectory_dash_line.png" id="1_2vby6"]
 [ext_resource type="Script" uid="uid://ns6s3mn2ncxi" path="res://Game/slingshot/slingshot.gd" id="1_wkq5f"]
+[ext_resource type="PackedScene" uid="uid://bvm6nmerlxma3" path="res://Game/rebondisseur/PlacementPreview.tscn" id="3_wkq5f"]
 
 [node name="Slingshot" type="Area2D" unique_id=518190497]
 script = ExtResource("1_wkq5f")
@@ -16,5 +17,29 @@ texture_repeat = 2
 default_color = Color(0.4246666, 0.91, 0, 1)
 texture = ExtResource("1_2vby6")
 texture_mode = 1
+
+[node name="PlacementPreview" parent="." unique_id=699951411 instance=ExtResource("3_wkq5f")]
+position = Vector2(119, 240)
+dot_color = Color(0.67670745, 0.39297226, 0.37619346, 1)
+
+[node name="PlacementPreview2" parent="." unique_id=563977261 instance=ExtResource("3_wkq5f")]
+position = Vector2(168, 252)
+dot_color = Color(0.6784314, 0.39215687, 0.3764706, 1)
+
+[node name="PlacementPreview3" parent="." unique_id=1787639790 instance=ExtResource("3_wkq5f")]
+position = Vector2(201, 289)
+dot_color = Color(0.6784314, 0.39215687, 0.3764706, 1)
+
+[node name="PlacementPreview4" parent="." unique_id=2066424712 instance=ExtResource("3_wkq5f")]
+position = Vector2(209, 338)
+dot_color = Color(0.6784314, 0.39215687, 0.3764706, 1)
+
+[node name="PlacementPreview5" parent="." unique_id=1710641763 instance=ExtResource("3_wkq5f")]
+position = Vector2(125, 428)
+dot_color = Color(0.6784314, 0.39215687, 0.3764706, 1)
+
+[node name="PlacementPreview6" parent="." unique_id=967231740 instance=ExtResource("3_wkq5f")]
+position = Vector2(221, 424)
+dot_color = Color(0.611036, 0.44880396, 0.252166, 1)
 
 [connection signal="release_touch" from="." to="." method="_on_release_touch"]
