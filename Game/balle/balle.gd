@@ -1,4 +1,8 @@
 extends RigidBody2D
+class_name Ball
+
+# Emitted only once, the very first time the ball is launched
+signal first_launched
 
 @export var speed: float = 300.0
 @export var launch_direction: Vector2 = Vector2(1, -1)
@@ -13,6 +17,10 @@ extends RigidBody2D
 
 var launched := false
 var needs_reset := false
+# True once the game is over: the ball can no longer be launched
+var game_over := false
+# True after the very first launch, so first_launched is emitted only once
+var has_launched_once := false
 
 func _ready() -> void:
 	# Permet aux GoalZone de reconnaître la balle
@@ -39,7 +47,7 @@ func _get_board_rect() -> Rect2:
 	return get_viewport_rect()
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if launched:
+	if launched or game_over:
 		return
 	var pressed := false
 	if event is InputEventMouseButton:
@@ -50,6 +58,8 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 		launch()
 
 func launch() -> void:
+	if game_over:
+		return
 	launched = true
 	var dir := launch_direction
 	if random_launch:
@@ -58,6 +68,16 @@ func launch() -> void:
 		var angle := deg_to_rad(randf_range(-max_launch_angle, max_launch_angle))
 		dir = Vector2(side, 0.0).rotated(angle)
 	apply_central_impulse(dir.normalized() * speed * mass)
+
+	# Only the first launch of the game notifies the Board (starts the timer)
+	if not has_launched_once:
+		has_launched_once = true
+		first_launched.emit()
+
+# Puts the ball back at the center, stopped, and forbids any further launch
+func end_game() -> void:
+	game_over = true
+	needs_reset = true
 
 func _process(_delta: float) -> void:
 	# Si la balle sort du board, on demande un reset

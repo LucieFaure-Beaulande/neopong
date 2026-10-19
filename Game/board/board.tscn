@@ -1,5 +1,6 @@
 [gd_scene format=3 uid="uid://o3merluvrn1h"]
 
+[ext_resource type="Script" uid="uid://g3hnqpmln6o0" path="res://Game/board/board.gd" id="1_m2ylt"]
 [ext_resource type="PackedScene" uid="uid://8kiwc2w1jjdf" path="res://Game/vacuum/vacuum_zone.tscn" id="1_qj6ra"]
 [ext_resource type="PackedScene" uid="uid://bc3kym46wht34" path="res://Game/goalzone/goalzone.tscn" id="2_uliie"]
 [ext_resource type="PackedScene" uid="uid://bqpl5o1ki1st4" path="res://Game/slingshot/slingshot.tscn" id="2_vsefh"]
@@ -25,6 +26,7 @@ size = Vector2(388, 716)
 size = Vector2(1314, 29)
 
 [node name="Board" type="Node2D" unique_id=1187871317]
+script = ExtResource("1_m2ylt")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1737327288]
 offset_right = 640.0

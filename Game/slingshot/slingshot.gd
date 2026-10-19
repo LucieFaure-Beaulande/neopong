@@ -157,3 +157,7 @@ func _on_release_touch(touch_number: int, touch_position:Vector2) -> void:
 		fire_projectile(touch_position)
 	elif touch_number in base_touch_ids:
 		reset_slingshot_state()
+
+func _on_input_disabled() -> void:
+	# Cancels any slingshot being armed, so nothing is fired and the lines disappear
+	reset_slingshot_state()
