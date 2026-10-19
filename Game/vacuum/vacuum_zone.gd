@@ -3,8 +3,8 @@ extends PrivateTouchZone
 signal vacuum_enabled(enabled:bool)
 signal collision_mask_updated(mask:int)
 
-@export var nb_fingers_for_base: int = 1
-@export var nb_fingers_for_aim: int = 1
+@export var nb_fingers_for_base: int = 2
+@export var nb_fingers_for_aim: int = 2
 
 @onready var vacuum: Node2D = $Vacuum
 
@@ -15,11 +15,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	#print(nb_of_touches())
-	#print(nb_of_touches)
-	if nb_of_touches >= nb_fingers_for_base:
+	if get_touch_ammount() >= nb_fingers_for_base:
 		update_vacuum_position()
-		if nb_of_touches >= nb_fingers_for_base + nb_fingers_for_aim: 
+		if get_touch_ammount() >= nb_fingers_for_base + nb_fingers_for_aim: 
 			update_vacuum_aim()
 	else:
 		reset()

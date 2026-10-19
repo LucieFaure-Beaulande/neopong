@@ -1,27 +1,38 @@
 extends Area2D
 class_name PrivateTouchZone
 
+# Tracks the different touch inputs inside the zone
+# Saves the touch number (usually the order in which the finger has been placed)
+# and the event index associated with the touch number
+# Use this when you need to get a touch input
+# touch number starts at 1 (because the 0th touch doesn't make sense)
 var touch_order_dict:Dictionary[int, int] = {}
+
+# Tracks the position of each input event inside the zone
+# it's best to avoid using this variable when PrivateTouchZone is inherited
+# prioritise using the touch number
 var touch_event_dict:Dictionary[int, Vector2] = {}
-#tracks total number of fingers places, only resets when there's no finger left
+
+# tracks total number of fingers places, only resets when there's no finger left
 # this is to prevent placing fingers and then removing them to cheat
-#also tracks the order fingers are placed
+# also tracks the order fingers are placed
+# in the end this is probably not the best solution but it does its job
 var nb_of_touches:int = 0
 
+# We needed a way to see when a specific touch is let go off for the sling shot 
 signal release_touch(touch_number:int, touch_position:Vector2)
 
 func _ready() -> void:
 	input_pickable = true
 
 func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
-	#print(touch_order_dict)
 	if event is InputEventScreenTouch:
 		if event.pressed:
-			nb_of_touches += 1
-			touch_order_dict.set(nb_of_touches, event.index)
+			var touch_number:int = generate_touch_number()
+			touch_order_dict.set(touch_number, event.index)
 			touch_event_dict.set(event.index, event.position)
 			#print("touch: ", event.position)
-			print("added ", nb_of_touches)
+			#print("added ", nb_of_touches)
 		else:
 			release_touch.emit(get_touch_from_event_index(event.index), 
 			touch_event_dict.get(event.index))
@@ -86,3 +97,19 @@ func get_touch_from_event_index(index:int) -> int:
 	if touch == null:
 		return -1
 	return touch
+
+# Checks if a touch is missing and returns it
+# otherwise increases the nb_of_touches and returns that
+# this is because previously, we just kept incresing nb_of_touches if not all fingers were released, 
+# and the generated numbers didn't make a lot of sense
+# so now if a finger is accidentaly release and placed back, the original order is kept
+func generate_touch_number() -> int:
+	for i in range(1,nb_of_touches):
+		if !touch_order_dict.has(i):
+			return i
+	nb_of_touches += 1
+	return nb_of_touches
+	
+	
+func get_touch_ammount() -> int:
+	return touch_order_dict.keys().size()
