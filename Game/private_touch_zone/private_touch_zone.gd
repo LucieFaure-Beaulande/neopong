@@ -19,6 +19,9 @@ var touch_event_dict:Dictionary[int, Vector2] = {}
 # in the end this is probably not the best solution but it does its job
 var nb_of_touches:int = 0
 
+# When false, every touch is ignored (used when the game is over)
+var input_enabled: bool = true
+
 # We needed a way to see when a specific touch is let go off for the sling shot 
 signal release_touch(touch_number:int, touch_position:Vector2)
 
@@ -26,6 +29,9 @@ func _ready() -> void:
 	input_pickable = true
 
 func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
+	if not input_enabled:
+		return
+
 	if event is InputEventScreenTouch:
 		if event.pressed:
 			var touch_number:int = generate_touch_number()
@@ -44,6 +50,8 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 
 # if drag goes outside the box, we remove the touch
 func _unhandled_input(event: InputEvent) -> void:
+	if not input_enabled:
+		return
 	if event is InputEventScreenDrag:
 		if !is_point_in_area(event.position):
 			remove_touch_from_event_index(event.index)
@@ -118,3 +126,16 @@ func generate_touch_number() -> int:
 	
 func get_touch_ammount() -> int:
 	return touch_order_dict.keys().size()
+
+# Enables or disables every touch of this zone (used when the game is over)
+func set_input_enabled(enabled: bool) -> void:
+	input_enabled = enabled
+	if not enabled:
+		touch_order_dict.clear()
+		touch_event_dict.clear()
+		nb_of_touches = 0
+		_on_input_disabled()
+
+# Hook meant to be overridden by child classes to clean up their own state
+func _on_input_disabled() -> void:
+	pass
