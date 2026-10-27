@@ -5,7 +5,8 @@ const MAX_LINE_DISTANCE: float = 250.0
 # Combien de temps (en secondes) la ligne rouge reste visible après la cassure avant de disparaître
 @export var broken_display_time: float = 0.4
 
-
+signal players_ready(ready:bool)
+var pre_match:bool = true
 
 const COLOR_ACTIVE := Color.GREEN
 const COLOR_BROKEN := Color.RED
@@ -45,12 +46,7 @@ func _ready() -> void:
 				placement_preview_a.global_position = local_center + Vector2(0,_distance_after_break/2)
 				placement_preview_b.global_position = local_center + Vector2(0,-_distance_after_break/2)
 				
-	# Retourne un vecteur nul ou affiche un avertissement si aucune forme valide n'est trouvée
-	push_warning("Aucune CollisionShape2D rectangulaire valide n'a été trouvée.")
-	
-	
 
-	
 	# Style visuel de la ligne
 	line2d.width = 6.0
 	line2d.default_color = COLOR_ACTIVE
@@ -74,15 +70,21 @@ func _line_active() -> bool:
 
 func _update_line_state() -> void:
 	if not _has_two_touches():
+		if pre_match:
+			players_ready.emit(false)
 		_hide_preview(false)
 		line_broken = false
 		_broken_timer = 0.0
 		return
 	if line_broken:
+		if pre_match:
+			players_ready.emit(false)
 		_hide_preview(false)
 		return
 	
 	_hide_preview(true)
+	if pre_match:
+		players_ready.emit(true)
 	
 	var p1: Vector2 = get_position_from_touch_number(1)
 	var p2: Vector2 = get_position_from_touch_number(2)
