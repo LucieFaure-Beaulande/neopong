@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://7m6r7da5rdw0"]
 
 [ext_resource type="Script" uid="uid://4uwh4j8sr181" path="res://Game/rebondisseur/rebondisseur_zone.gd" id="1_lxxns"]
+[ext_resource type="PackedScene" uid="uid://bvm6nmerlxma3" path="res://Game/rebondisseur/PlacementPreview.tscn" id="2_mhfrp"]
 
 [sub_resource type="SegmentShape2D" id="SegmentShape2D_5wdvn"]
 
@@ -18,7 +19,6 @@ metadata/_custom_type_script = "uid://cbynmiekcj4to"
 shape = SubResource("SegmentShape2D_5wdvn")
 debug_color = Color(0, 0, 0, 0.41960785)
 
-
 [node name="Line2D" type="Line2D" parent="AnimatableBody2D" unique_id=22118889]
 default_color = Color(0.8117647, 0, 0.34117648, 1)
 
@@ -28,5 +28,11 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AnimatableBody2D/Area2D" unique_id=874427324]
 shape = SubResource("SegmentShape2D_5axvk")
+
+[node name="PlacementPreviewA" parent="." unique_id=699951411 instance=ExtResource("2_mhfrp")]
+dot_color = Color(1, 1, 0, 1)
+
+[node name="PlacementPreviewB" parent="." unique_id=21544882 instance=ExtResource("2_mhfrp")]
+dot_color = Color(1, 1, 0, 1)
 
 [connection signal="body_entered" from="AnimatableBody2D/Area2D" to="." method="_on_area_2d_body_entered"]

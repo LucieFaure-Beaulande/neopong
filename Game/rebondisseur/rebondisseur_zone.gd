@@ -5,6 +5,8 @@ const MAX_LINE_DISTANCE: float = 250.0
 # Combien de temps (en secondes) la ligne rouge reste visible après la cassure avant de disparaître
 @export var broken_display_time: float = 0.4
 
+
+
 const COLOR_ACTIVE := Color.GREEN
 const COLOR_BROKEN := Color.RED
 
@@ -16,11 +18,15 @@ var line_broken: bool = false
 
 @onready var area_shape: CollisionShape2D = $AnimatableBody2D/Area2D/CollisionShape2D
 
+@onready var placement_preview_a: Node2D = $PlacementPreviewA
+@onready var placement_preview_b: Node2D = $PlacementPreviewB
+
 
 var _segment: SegmentShape2D
 var _broken_timer: float = 0.0
 var _broken_p1: Vector2 = Vector2.ZERO
 var _broken_p2: Vector2 = Vector2.ZERO
+var _distance_after_break: float = 180
 
 @export var _rect_width: int = 20
 
@@ -30,11 +36,26 @@ func _ready() -> void:
 	collision_shape.shape = _segment
 	area_shape.shape = _segment
 	collision_shape.disabled = true
+	
+	for child in get_children():
+		if child is CollisionShape2D:
+			if child.shape and child.shape is RectangleShape2D:
+				var local_center = child.position
+				#parent_node.to_global(local_center)
+				placement_preview_a.global_position = local_center + Vector2(0,_distance_after_break/2)
+				placement_preview_b.global_position = local_center + Vector2(0,-_distance_after_break/2)
+				
+	# Retourne un vecteur nul ou affiche un avertissement si aucune forme valide n'est trouvée
+	push_warning("Aucune CollisionShape2D rectangulaire valide n'a été trouvée.")
+	
+	
 
+	
 	# Style visuel de la ligne
 	line2d.width = 6.0
 	line2d.default_color = COLOR_ACTIVE
 	line2d.clear_points()
+	
 
 func _physics_process(delta: float) -> void:
 	_update_line_state()
@@ -53,14 +74,21 @@ func _line_active() -> bool:
 
 func _update_line_state() -> void:
 	if not _has_two_touches():
+		_hide_preview(false)
 		line_broken = false
 		_broken_timer = 0.0
 		return
 	if line_broken:
+		_hide_preview(false)
 		return
-
+	
+	_hide_preview(true)
+	
 	var p1: Vector2 = get_position_from_touch_number(1)
 	var p2: Vector2 = get_position_from_touch_number(2)
+	
+	placement_preview_a.global_position = p1
+	placement_preview_b.global_position = p2
 
 	if p1.distance_to(p2) > MAX_LINE_DISTANCE:
 		# La ligne casse : on garde sa dernière position pour l'afficher en rouge un court instant
@@ -68,6 +96,17 @@ func _update_line_state() -> void:
 		_broken_timer = broken_display_time
 		_broken_p1 = p1
 		_broken_p2 = p2
+		
+		# Calcul de la position resserrée pour les aperçus (prévisualisations)
+		var center: Vector2 = (p1 + p2) * 0.5
+		var direction: Vector2 = (p2 - p1).normalized()
+		
+		# Sécurité au cas où p1 et p2 seraient exactement au même endroit
+		if direction == Vector2.ZERO:
+			direction = Vector2.RIGHT
+
+		placement_preview_a.global_position = center - direction * (_distance_after_break * 0.5)
+		placement_preview_b.global_position = center + direction * (_distance_after_break * 0.5)
 
 func _update_collision() -> void:
 	if not _line_active():
@@ -83,6 +122,8 @@ func _update_collision() -> void:
 
 	_segment.a = collision_shape.to_local(p1)
 	_segment.b = collision_shape.to_local(p2)
+	
+	
 	
 	collision_shape.set_deferred("disabled", false)
 	area_shape.set_deferred("disabled", false)
@@ -122,3 +163,7 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body != self:
 		print(body)
 		line_broken = true
+
+func _hide_preview(hide:bool) -> void:
+	placement_preview_a.visible = !hide
+	placement_preview_b.visible = !hide
