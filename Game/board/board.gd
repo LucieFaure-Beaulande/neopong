@@ -1,15 +1,27 @@
 extends Node2D
 
+@export var test_mode:bool = false
+signal test_mode_activated
+
+signal match_started
+
 # Total duration of a game, in seconds (3 minutes by default)
 @export var game_duration: float = 180.0
 
 @onready var ball: Ball = $Balle
 @onready var ux: ScoreBoard = $Ux
+@onready var countdown: Countdown = $CanvasLayer/Countdown
 
 var game_timer: Timer
 var is_game_over: bool = false
 
+var blue_team_ready:bool = false
+var red_team_ready:bool = false
+
 func _ready() -> void:
+	if test_mode:
+		test_mode_activated.emit()
+	
 	game_timer = Timer.new()
 	game_timer.one_shot = true
 	game_timer.wait_time = game_duration
@@ -21,6 +33,9 @@ func _ready() -> void:
 
 	# Shows the full duration before the game starts
 	ux.update_timer(game_duration)
+	
+	countdown.countdown_finished.connect(_on_countdown_finished)
+	#countdown.countdown_started.emit()
 
 func _process(_delta: float) -> void:
 	if not game_timer.is_stopped():
@@ -28,7 +43,9 @@ func _process(_delta: float) -> void:
 
 func _on_ball_first_launched() -> void:
 	if game_timer.is_stopped() and not is_game_over:
-		game_timer.start()
+		if not test_mode:
+			game_timer.start()
+		
 
 func _on_game_timer_timeout() -> void:
 	is_game_over = true
@@ -47,3 +64,23 @@ func _on_game_timer_timeout() -> void:
 		projectile.queue_free()
 
 	ux.show_game_over()
+
+
+func _on_rebondisseur_zone_bleu_players_ready(ready: bool) -> void:
+	blue_team_ready = ready
+	initial_ready_launch()
+
+
+func _on_rebondisseur_zone_rouge_players_ready(ready: bool) -> void:
+	red_team_ready = ready
+	initial_ready_launch()
+
+
+func initial_ready_launch():
+	if blue_team_ready and red_team_ready:
+		match_started.emit()
+		countdown.countdown_started.emit()
+		
+func _on_countdown_finished():
+	
+	ball.launch()

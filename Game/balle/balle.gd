@@ -47,7 +47,7 @@ func _get_board_rect() -> Rect2:
 	return get_viewport_rect()
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if launched or game_over:
+	if launched or game_over or not has_launched_once:
 		return
 	var pressed := false
 	if event is InputEventMouseButton:
