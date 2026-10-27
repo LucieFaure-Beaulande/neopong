@@ -5,7 +5,7 @@ class_name Ball
 signal first_launched
 
 @export var speed: float = 300.0
-@export var launch_direction: Vector2 = Vector2(1, -1)
+@export var launch_direction: Vector2 = Vector2(1, 0)
 # Vitesse de rotation en radians/seconde (positif = sens des aiguilles d'une montre)
 @export var spin_speed: float = 6.0
 # Si activé, la direction du lancer est aléatoire (launch_direction est alors ignorée)
@@ -57,16 +57,20 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 	if pressed:
 		launch()
 
-func launch() -> void:
+func launch(forced_dir:Vector2=Vector2.ZERO) -> void:
 	if game_over:
 		return
 	launched = true
-	var dir := launch_direction
-	if random_launch:
+	var dir := launch_direction 
+	
+	if forced_dir != Vector2.ZERO:
+		dir = forced_dir
+	elif random_launch:
 		# Côté aléatoire (gauche ou droite) + angle aléatoire autour de l'horizontale
 		var side := 1.0 if randf() < 0.5 else -1.0
 		var angle := deg_to_rad(randf_range(-max_launch_angle, max_launch_angle))
 		dir = Vector2(side, 0.0).rotated(angle)
+	
 	apply_central_impulse(dir.normalized() * speed * mass)
 
 	# Only the first launch of the game notifies the Board (starts the timer)

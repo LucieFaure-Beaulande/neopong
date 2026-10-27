@@ -69,6 +69,11 @@ func _on_pull_finished() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	# La balle touche la zone : point pour l'équipe de la zone, puis la balle est remise en jeu
 	if body.is_in_group("balle"):
+		if team == Team.BLEUE:
+			Scores.blue_team += 1
+		else:
+			Scores.red_team += 1
+			
 		goal_scored.emit(team)
 		body.needs_reset = true
 		return

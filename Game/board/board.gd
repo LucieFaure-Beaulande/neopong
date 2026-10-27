@@ -11,6 +11,8 @@ signal match_started
 @onready var ball: Ball = $Balle
 @onready var ux: ScoreBoard = $Ux
 @onready var countdown: Countdown = $CanvasLayer/Countdown
+@onready var progress_bar_red: ProgressBar = $ProgressBarRed
+@onready var progress_bar_blue: ProgressBar = $ProgressBarBlue
 
 var game_timer: Timer
 var is_game_over: bool = false
@@ -40,6 +42,9 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if not game_timer.is_stopped():
 		ux.update_timer(game_timer.time_left)
+	
+	if test_mode:
+		handle_script()
 
 func _on_ball_first_launched() -> void:
 	if game_timer.is_stopped() and not is_game_over:
@@ -82,5 +87,26 @@ func initial_ready_launch():
 		countdown.countdown_started.emit()
 		
 func _on_countdown_finished():
-	
-	ball.launch()
+	if test_mode:
+		ball.speed = 150
+		ball.random_launch = false
+		ball.launch(Vector2.LEFT)
+	else:
+		ball.launch()
+
+
+func handle_script():
+	# Depending on test match progress, different behaviour
+	match Scores.red_team + Scores.blue_team :
+		0:
+			pass
+		1:
+			# Fill blue bar
+			progress_bar_blue.value = progress_bar_blue.max_value
+			# On pourrait activer et désactiver des boutons mais ça va attendre un peu
+		2:
+			# Fill red bar
+			progress_bar_red.value = progress_bar_red.max_value
+		3:
+			pass
+			#Force finish match
