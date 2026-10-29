@@ -82,6 +82,11 @@ func is_point_in_area(point: Vector2) -> bool:
 	
 	
 func get_position_from_touch_number(touch:int) -> Vector2:
+	if !touch_order_dict.has(touch):
+		print("Unknown touch number : " + str(touch))
+		push_error("Unknown touch number : " + str(touch))
+		return Vector2.ZERO
+		
 	var event_index:int = touch_order_dict.get(touch)
 	if event_index != null:
 		return touch_event_dict.get(event_index)
