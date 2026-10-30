@@ -30,6 +30,11 @@ func _ready() -> void:
 	collision_shape.shape = _segment
 	area_shape.shape = _segment
 	collision_shape.disabled = true
+	
+	for child: Node in get_children():
+		if child is Area2D:
+			child.collision_layer = collision_layer
+			child.collision_mask = collision_mask
 
 	# Style visuel de la ligne
 	line2d.width = 6.0

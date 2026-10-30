@@ -2,6 +2,7 @@ extends TextureButton
 
 @export var progressBarRed : ProgressBar
 @export var vacuumButtonRed : TextureButton
+@onready var slingshot_red_zone: CollisionShape2D = $"../SlingshotRed/CollisionShape2D"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,6 +18,7 @@ func _pressed() -> void:
 	progressBarRed.value = 0
 	progressBarRed.isFull = false
 	vacuumButtonRed.disabled = true
+	slingshot_red_zone.disabled = false
 
 func enableButton():
 	disabled = false

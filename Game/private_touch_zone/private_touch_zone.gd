@@ -22,11 +22,15 @@ var nb_of_touches:int = 0
 # We needed a way to see when a specific touch is let go off for the sling shot 
 signal release_touch(touch_number:int, touch_position:Vector2)
 
+const EMULATED_DEVICE_ID:int = -1
+
 func _ready() -> void:
 	input_pickable = true
 
 func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventScreenTouch:
+		if event.device == EMULATED_DEVICE_ID:
+			return
 		if event.pressed:
 			var touch_number:int = generate_touch_number()
 			touch_order_dict.set(touch_number, event.index)
@@ -39,8 +43,12 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 			remove_touch_from_event_index(event.index)
 		
 	if event is InputEventScreenDrag:
+		if event.device == EMULATED_DEVICE_ID:
+			return
 		touch_event_dict.set(event.index, event.position)
 		#print("drag ", event.position, " index : ", event.index)
+		
+	
 
 # if drag goes outside the box, we remove the touch
 func _unhandled_input(event: InputEvent) -> void:

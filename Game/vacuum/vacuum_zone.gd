@@ -6,15 +6,18 @@ signal collision_mask_updated(mask:int)
 @export var nb_fingers_for_base: int = 2
 @export var nb_fingers_for_aim: int = 2
 
+@export var progressBar: ProgressBar
+
 @onready var vacuum: Node2D = $Vacuum
 
 func _ready() -> void:
 	reset()
 	collision_mask_updated.emit(collision_mask)
+	progressBar.barDepleted.connect(on_bar_depleted)
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if get_touch_ammount() >= nb_fingers_for_base:
 		update_vacuum_position()
 		if get_touch_ammount() >= nb_fingers_for_base + nb_fingers_for_aim: 
@@ -30,6 +33,7 @@ func update_vacuum_position() -> void:
 			pos_sum += get_position_from_touch_number(i)
 		else:
 			reset()
+			change_collision_state(true)
 			return
 	
 	vacuum.visible = true
@@ -50,7 +54,14 @@ func update_vacuum_aim() -> void:
 	vacuum_enabled.emit(true)
 	vacuum.look_at(pos_sum/nb_fingers_for_aim)
 
-
 func reset() -> void:
 	vacuum_enabled.emit(false)
 	vacuum.visible = false
+
+func change_collision_state(state: bool):
+	for child: Node in self.get_children():
+		if child is CollisionShape2D:
+			child.disabled = state
+
+func on_bar_depleted():
+	reset()

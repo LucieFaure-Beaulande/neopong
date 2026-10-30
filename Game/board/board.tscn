@@ -199,9 +199,24 @@ size = Vector2(382, 718)
 size = Vector2(388, 716)
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_43rjr"]
+friction = 0.0
+bounce = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3j5br"]
 size = Vector2(1314, 29)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jfqx4"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p5r8g"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 16
 
 [node name="Board" type="Node2D" unique_id=1187871317]
 
@@ -237,20 +252,45 @@ collision_layer = 5
 collision_mask = 5
 team = 1
 
-[node name="Slingshot" parent="." unique_id=1398244917 instance=ExtResource("2_vsefh")]
+[node name="SlingshotRed" parent="." unique_id=1398244917 node_paths=PackedStringArray("ennemyBounceBar") instance=ExtResource("2_vsefh")]
+collision_layer = 4
+collision_mask = 4
+ennemyBounceBar = NodePath("../RebondisseurZoneBleu")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Slingshot" unique_id=1234964609]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlingshotRed" unique_id=1234964609]
 position = Vector2(125.375, 357)
 shape = SubResource("RectangleShape2D_43rjr")
 debug_color = Color(0.7375592, 0.46834207, 0.031818468, 0.41960785)
 
-[node name="VacuumZone" parent="." unique_id=1960340670 instance=ExtResource("1_qj6ra")]
+[node name="SlingshotBlue" parent="." unique_id=518190497 node_paths=PackedStringArray("ennemyBounceBar") instance=ExtResource("2_vsefh")]
+collision_layer = 2
+collision_mask = 2
+ennemyBounceBar = NodePath("../RebondisseurZoneRouge")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlingshotBlue" unique_id=167678902]
+position = Vector2(1159, 356)
+shape = SubResource("RectangleShape2D_43rjr")
+debug_color = Color(0.7375592, 0.46834207, 0.031818468, 0.41960785)
+
+[node name="VacuumZoneBlue" parent="." unique_id=1960340670 node_paths=PackedStringArray("progressBar") instance=ExtResource("1_qj6ra")]
 position = Vector2(1115, 345)
 collision_layer = 2
 collision_mask = 2
+progressBar = NodePath("../ProgressBarBlue")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZone" unique_id=728963688]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZoneBlue" unique_id=728963688]
 position = Vector2(38, 19)
+shape = SubResource("RectangleShape2D_uhwdc")
+debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
+
+[node name="VacuumZoneRed" parent="." unique_id=1981078313 node_paths=PackedStringArray("progressBar") instance=ExtResource("1_qj6ra")]
+position = Vector2(2230, 690)
+collision_layer = 4
+collision_mask = 4
+progressBar = NodePath("../ProgressBarRed")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZoneRed" unique_id=1505698489]
+position = Vector2(-2109, -331)
 shape = SubResource("RectangleShape2D_uhwdc")
 debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
 
@@ -262,6 +302,8 @@ shape = SubResource("RectangleShape2D_vsefh")
 debug_color = Color(0.16044924, 0.94135463, 3.080368e-06, 0.41960785)
 
 [node name="RebondisseurZoneRouge" parent="." unique_id=588083500 instance=ExtResource("3_vsefh")]
+collision_layer = 256
+collision_mask = 256
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="RebondisseurZoneRouge" unique_id=1087021124]
 position = Vector2(452, 356)
@@ -269,8 +311,8 @@ shape = SubResource("RectangleShape2D_wxr5f")
 debug_color = Color(0.16078432, 0.9411765, 0, 0.41960785)
 
 [node name="BorderLeft" type="StaticBody2D" parent="." unique_id=594068700]
-collision_layer = 5
-collision_mask = 5
+collision_layer = 385
+collision_mask = 385
 physics_material_override = SubResource("PhysicsMaterial_43rjr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BorderLeft" unique_id=1776507818]
@@ -278,8 +320,8 @@ position = Vector2(647, -5.5)
 shape = SubResource("RectangleShape2D_3j5br")
 
 [node name="BorderRight" type="StaticBody2D" parent="." unique_id=402325207]
-collision_layer = 5
-collision_mask = 5
+collision_layer = 385
+collision_mask = 385
 physics_material_override = SubResource("PhysicsMaterial_43rjr")
 
 [node name="BorderRight#CollisionShape2D" type="CollisionShape2D" parent="BorderRight" unique_id=743419606]
@@ -294,26 +336,30 @@ progress_bar_red = NodePath("../ProgressBarRed")
 progress_bar_blue = NodePath("../ProgressBarBlue")
 
 [node name="ProgressBarRed" type="ProgressBar" parent="." unique_id=575213242]
-offset_left = 25.0
-offset_top = 33.159027
-offset_right = 673.2513
-offset_bottom = 71.07187
+offset_left = 25.000002
+offset_top = 32.107014
+offset_right = 681.0366
+offset_bottom = 70.01985
 rotation = 1.5707964
+theme_override_styles/fill = SubResource("StyleBoxFlat_jfqx4")
 max_value = 2000.0
 rounded = true
+show_percentage = false
 script = ExtResource("16_ljpcf")
 
 [node name="ProgressBarBlue" type="ProgressBar" parent="." unique_id=1294379502]
 offset_left = 1255.0
-offset_top = 683.0
-offset_right = 1903.2513
-offset_bottom = 720.91284
+offset_top = 688.00006
+offset_right = 1910.2515
+offset_bottom = 725.9129
 rotation = -1.5707964
+theme_override_styles/fill = SubResource("StyleBoxFlat_p5r8g")
 max_value = 2000.0
 rounded = true
+show_percentage = false
 script = ExtResource("16_ljpcf")
 
-[node name="VacuumButtonRed" type="TextureButton" parent="." unique_id=1870149725 node_paths=PackedStringArray("progressBarRed", "slingshotButtonRed")]
+[node name="VacuumButtonRed" type="TextureButton" parent="." unique_id=1870149725 node_paths=PackedStringArray("progressBarRed", "slingshotButtonRed", "vacuum_red_zone")]
 offset_left = 85.0
 offset_top = 249.0
 offset_right = 139.0
@@ -324,6 +370,7 @@ texture_disabled = ExtResource("19_v7i47")
 script = ExtResource("19_gwtj2")
 progressBarRed = NodePath("../ProgressBarRed")
 slingshotButtonRed = NodePath("../SlingshotButtonRed")
+vacuum_red_zone = NodePath("../VacuumZoneRed")
 
 [node name="SlingshotButtonRed" type="TextureButton" parent="." unique_id=182699997 node_paths=PackedStringArray("progressBarRed", "vacuumButtonRed")]
 offset_left = 85.0

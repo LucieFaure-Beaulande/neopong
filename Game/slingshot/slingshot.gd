@@ -7,6 +7,8 @@ var projectile_preload = preload("res://Game/slingshot/slingshot_projectile.tscn
 @export var slingshot_power_multiplier: float = 5.0
 @export var max_pull_distance: float = 300.0
 
+@export var ennemyBounceBar: Area2D
+
 var active_touches = {}
 var base_touch_ids = []
 var puller_id = -1
@@ -15,6 +17,7 @@ var anchor_id_2 = -1
 
 func _ready():
 	clear_slingshot_visuals()
+	reset_slingshot_state()
 
 func _process(_delta):
 	if touch_order_dict.size() == 5 and base_touch_ids.is_empty():
@@ -133,6 +136,8 @@ func fire_projectile(pull_pos:Vector2):
 	# 3. Set its starting position to the center of the slingshot base
 	var world_midpoint = get_canvas_transform().affine_inverse() * midpoint
 	new_projectile.global_position = world_midpoint
+	new_projectile.collision_mask = ennemyBounceBar.collision_mask
+	new_projectile.collision_layer = ennemyBounceBar.collision_layer
 
 	# 4. Fire it
 	new_projectile.apply_central_impulse(impulse_force)
@@ -145,6 +150,7 @@ func reset_slingshot_state():
 	anchor_id_1 = -1
 	anchor_id_2 = -1
 	clear_slingshot_visuals()
+	change_collision_state(true)
 
 func clear_slingshot_visuals():
 	line_left.visible = false
@@ -157,3 +163,8 @@ func _on_release_touch(touch_number: int, touch_position:Vector2) -> void:
 		fire_projectile(touch_position)
 	elif touch_number in base_touch_ids:
 		reset_slingshot_state()
+		
+func change_collision_state(state: bool):
+	for child: Node in self.get_children():
+		if child is CollisionShape2D:
+			child.disabled = state
