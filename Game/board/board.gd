@@ -118,15 +118,17 @@ func _on_countdown_finished():
 	else:
 		ball.launch()
 
+func test_disable_buttons()->void:
+	vacuum_button_blue.disabled = true
+	vacuum_button_red.disabled = true
+	slingshot_button_blue.disabled = true
+	slingshot_button_red.disabled = true
 
 func handle_test_script():
 	# Depending on test match progress, different behaviour
 	match current_phase:
 		0: # Phase de base, set up, renvoi de la balle 
-			vacuum_button_blue.disabled = true
-			vacuum_button_red.disabled = true
-			slingshot_button_blue.disabled = true
-			slingshot_button_red.disabled = true
+			test_disable_buttons()
 			
 		1: # début des tests de pouvoir Aspirateur
 			# Fill blue bar
@@ -134,6 +136,7 @@ func handle_test_script():
 			# Empty other bar
 			progress_bar_red.value = 0
 			
+			test_disable_buttons()
 			vacuum_button_blue.disabled = false
 			
 		2: # début des tests de pouvoir Slingshot
@@ -142,7 +145,7 @@ func handle_test_script():
 			# Empty other bar
 			progress_bar_blue.value = 0
 			
-			vacuum_button_blue.disabled = true
+			test_disable_buttons()
 			slingshot_button_red.disabled = false
 			
 		3: # Attaque surprise slingshot!
@@ -155,7 +158,7 @@ func handle_test_script():
 				proj.apply_central_impulse(proj_direction * test_proj_speed)
 				test_projectile_already_shot = true
 			
-			slingshot_button_red.disabled = true
+			test_disable_buttons()
 			
 		4: # Attaque surprise vacuum!
 			if !test_vacuum_already_spawned :
@@ -190,6 +193,5 @@ func handle_test_script():
 			_on_game_timer_timeout()
 			
 		6: # Back to main menu
-			# TODO
-			pass
+			get_tree().change_scene_to_file("res://UI/titleScreen.tscn")
 	
