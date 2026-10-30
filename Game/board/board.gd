@@ -1,7 +1,7 @@
 extends Node2D
 
 # Total duration of a game, in seconds (3 minutes by default)
-@export var game_duration: float = 30.0
+@export var game_duration: float = 180.0
 var milestone = 0.0
 var step = 0.0
 
@@ -34,6 +34,7 @@ func _process(_delta: float) -> void:
 func _on_ball_first_launched() -> void:
 	if game_timer.is_stopped() and not is_game_over:
 		game_timer.start()
+		clock.play()
 
 func _on_game_timer_timeout() -> void:
 	is_game_over = true

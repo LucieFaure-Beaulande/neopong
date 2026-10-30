@@ -2,6 +2,9 @@ extends AnimatedSprite2D
 
 var tick_count = 0
 
+func _ready() -> void:
+	pause()
+
 func update_timer() -> void:
 	tick_count += 1
 	play("tick" + str(tick_count))

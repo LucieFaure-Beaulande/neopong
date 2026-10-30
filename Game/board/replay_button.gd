@@ -1,0 +1,21 @@
+extends TextureButton
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	disabled = true
+	visible = false
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+
+func _on_clock_animation_finished() -> void:
+	disabled = false
+	visible = true
+
+
+func _on_pressed() -> void:
+	get_tree().reload_current_scene()
