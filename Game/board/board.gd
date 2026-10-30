@@ -14,11 +14,32 @@ signal match_started
 @onready var progress_bar_red: ProgressBar = $ProgressBarRed
 @onready var progress_bar_blue: ProgressBar = $ProgressBarBlue
 
+const SLINGSHOT_PROJECTILE = preload("uid://v0s1jbtupl54")
+
+@onready var vacuum_test_position: Marker2D = $vacuum_test_position
+@onready var slingshot_test_position: Marker2D = $slingshot_test_position
+@onready var vacuum_test_aim_position: Marker2D = $vacuum_test_aim_position
+
+var test_projectile_already_shot: bool = false
+var test_vacuum_already_spawned: bool = false
+
+@onready var rebondisseur_zone_bleu: RebondisseurZone = $RebondisseurZoneBleu
+@onready var rebondisseur_zone_rouge: RebondisseurZone = $RebondisseurZoneRouge
+
+@onready var vacuum_button_red: TextureButton = $VacuumButtonRed
+@onready var slingshot_button_red: TextureButton = $SlingshotButtonRed
+@onready var vacuum_button_blue: TextureButton = $VacuumButtonBlue
+@onready var slingshot_button_blue: TextureButton = $SlingshotButtonBlue
+
 var game_timer: Timer
 var is_game_over: bool = false
 
 var blue_team_ready:bool = false
 var red_team_ready:bool = false
+
+var current_phase:int = 0
+
+
 
 func _ready() -> void:
 	if test_mode:
@@ -44,7 +65,10 @@ func _process(_delta: float) -> void:
 		ux.update_timer(game_timer.time_left)
 	
 	if test_mode:
-		handle_script()
+		handle_test_script()
+	
+	if Input.is_action_just_pressed("ui_accept") and test_mode:
+		current_phase += 1
 
 func _on_ball_first_launched() -> void:
 	if game_timer.is_stopped() and not is_game_over:
@@ -95,18 +119,77 @@ func _on_countdown_finished():
 		ball.launch()
 
 
-func handle_script():
+func handle_test_script():
 	# Depending on test match progress, different behaviour
-	match Scores.red_team + Scores.blue_team :
-		0:
-			pass
-		1:
+	match current_phase:
+		0: # Phase de base, set up, renvoi de la balle 
+			vacuum_button_blue.disabled = true
+			vacuum_button_red.disabled = true
+			slingshot_button_blue.disabled = true
+			slingshot_button_red.disabled = true
+			
+		1: # début des tests de pouvoir Aspirateur
 			# Fill blue bar
 			progress_bar_blue.value = progress_bar_blue.max_value
-			# On pourrait activer et désactiver des boutons mais ça va attendre un peu
-		2:
+			# Empty other bar
+			progress_bar_red.value = 0
+			
+			vacuum_button_blue.disabled = false
+			
+		2: # début des tests de pouvoir Slingshot
 			# Fill red bar
 			progress_bar_red.value = progress_bar_red.max_value
-		3:
+			# Empty other bar
+			progress_bar_blue.value = 0
+			
+			vacuum_button_blue.disabled = true
+			slingshot_button_red.disabled = false
+			
+		3: # Attaque surprise slingshot!
+			if !test_projectile_already_shot :
+				var proj:RigidBody2D = SLINGSHOT_PROJECTILE.instantiate() as RigidBody2D
+				proj.global_position = slingshot_test_position.global_position
+				add_child(proj)
+				var proj_direction : Vector2 = proj.global_position.direction_to(rebondisseur_zone_rouge.latest_center_position)
+				var test_proj_speed := 400.0
+				proj.apply_central_impulse(proj_direction * test_proj_speed)
+				test_projectile_already_shot = true
+			
+			slingshot_button_red.disabled = true
+			
+		4: # Attaque surprise vacuum!
+			if !test_vacuum_already_spawned :
+				var vacuum:VacuumRaycast = VacuumRaycast.new()
+				
+				vacuum.collision_mask = 4
+				vacuum.target_position = Vector2(2000,0)
+				vacuum.collide_with_areas = true
+				vacuum.collide_with_bodies = false
+				
+				add_child(vacuum)
+				
+				vacuum.global_position = vacuum_test_position.global_position
+				vacuum.global_rotation += PI/10
+				
+				var timer := Timer.new()
+				add_child(timer)
+				timer.wait_time = 10.0
+				timer.one_shot = true
+				
+				# Define the inline behavior on timeout
+				timer.timeout.connect(func():
+					vacuum.previous_collider.pull_finished.emit()
+					vacuum.queue_free()
+					timer.queue_free() # Clean up the timer so it doesn't leak memory
+				)
+				
+				timer.start()
+				test_vacuum_already_spawned = true
+			
+		5: #Force finish match
+			_on_game_timer_timeout()
+			
+		6: # Back to main menu
+			# TODO
 			pass
-			#Force finish match
+	

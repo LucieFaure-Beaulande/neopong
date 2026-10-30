@@ -1,4 +1,5 @@
 extends PrivateTouchZone
+class_name RebondisseurZone
 
 const MAX_LINE_DISTANCE: float = 250.0
 
@@ -30,6 +31,8 @@ var _broken_p2: Vector2 = Vector2.ZERO
 var _distance_after_break: float = 180
 
 @export var _rect_width: int = 20
+
+var latest_center_position:Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	# Création du segment physique
@@ -91,6 +94,9 @@ func _update_line_state() -> void:
 	
 	placement_preview_a.global_position = p1
 	placement_preview_b.global_position = p2
+	
+	latest_center_position = (p1 + p2) / 2
+	print(latest_center_position)
 
 	if p1.distance_to(p2) > MAX_LINE_DISTANCE:
 		# La ligne casse : on garde sa dernière position pour l'afficher en rouge un court instant
@@ -109,6 +115,8 @@ func _update_line_state() -> void:
 
 		placement_preview_a.global_position = center - direction * (_distance_after_break * 0.5)
 		placement_preview_b.global_position = center + direction * (_distance_after_break * 0.5)
+		
+		
 
 func _update_collision() -> void:
 	if not _line_active():
