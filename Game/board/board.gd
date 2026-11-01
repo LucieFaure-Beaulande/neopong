@@ -7,9 +7,12 @@ signal match_started
 
 # Total duration of a game, in seconds (3 minutes by default)
 @export var game_duration: float = 180.0
+var milestone = 0.0
+var step = 0.0
 
 @onready var ball: Ball = $Balle
 @onready var ux: ScoreBoard = $Ux
+@onready var clock: AnimatedSprite2D = $Clock
 @onready var countdown: Countdown = $CanvasLayer/Countdown
 @onready var progress_bar_red: ProgressBar = $ProgressBarRed
 @onready var progress_bar_blue: ProgressBar = $ProgressBarBlue
@@ -59,22 +62,24 @@ func _ready() -> void:
 	game_timer = Timer.new()
 	game_timer.one_shot = true
 	game_timer.wait_time = game_duration
+	step = game_duration/16
+	milestone = game_duration-step
 	game_timer.timeout.connect(_on_game_timer_timeout)
 	add_child(game_timer)
 
 	# The timer only starts when the ball is launched for the first time
 	ball.first_launched.connect(_on_ball_first_launched)
-
-	# Shows the full duration before the game starts
-	ux.update_timer(game_duration)
 	
 	countdown.countdown_finished.connect(_on_countdown_finished)
 	#countdown.countdown_started.emit()
 
+
 func _process(_delta: float) -> void:
 	if not game_timer.is_stopped():
-		ux.update_timer(game_timer.time_left)
-	
+		if(game_timer.time_left <= milestone):
+			clock.update_timer()
+			milestone -= step
+	  
 	if test_mode:
 		handle_test_script()
 	
@@ -83,15 +88,17 @@ func _process(_delta: float) -> void:
 	
 	update_previews()
 
+
 func _on_ball_first_launched() -> void:
 	if game_timer.is_stopped() and not is_game_over:
 		if not test_mode:
 			game_timer.start()
-		
+			clock.play()
+
 
 func _on_game_timer_timeout() -> void:
 	is_game_over = true
-	ux.update_timer(0.0)
+	clock.update_timer()
 
 	# Stops the ball and forbids any new launch
 	ball.end_game()
