@@ -26,11 +26,11 @@ func _physics_process(delta: float) -> void:
 			
 
 func _draw() -> void:
-	var distance_limit:int = (get_collision_point().distance_to(global_position) if is_colliding() else 10000)
+	var distance_limit: int = (get_collision_point().distance_to(global_position) if is_colliding() else 10000)
 	var points = PackedVector2Array([
-		position,
-		Vector2(distance_limit, vacuum_angle), # Bas gauche
-		Vector2(distance_limit, -vacuum_angle)  # Bas droit
+		Vector2.ZERO,                    # Starts correctly at the raycast's origin (0,0)
+		Vector2(distance_limit, vacuum_angle), 
+		Vector2(distance_limit, -vacuum_angle)  
 	])
 	var color = Color.FOREST_GREEN
 	draw_colored_polygon(points, color)
