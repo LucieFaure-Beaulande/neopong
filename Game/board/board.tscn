@@ -187,10 +187,10 @@ sources/7 = SubResource("TileSetAtlasSource_gwtj2")
 sources/8 = SubResource("TileSetAtlasSource_v7i47")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43rjr"]
-size = Vector2(249.25, 700)
+size = Vector2(642.25, 700)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uhwdc"]
-size = Vector2(256, 718.5)
+size = Vector2(651, 718.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vsefh"]
 size = Vector2(382, 718)
@@ -258,7 +258,7 @@ collision_mask = 4
 ennemyBounceBar = NodePath("../RebondisseurZoneBleu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlingshotRed" unique_id=1234964609]
-position = Vector2(125.375, 357)
+position = Vector2(321.875, 357)
 shape = SubResource("RectangleShape2D_43rjr")
 debug_color = Color(0.7375592, 0.46834207, 0.031818468, 0.41960785)
 
@@ -290,7 +290,7 @@ collision_mask = 4
 progressBar = NodePath("../ProgressBarRed")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZoneRed" unique_id=1505698489]
-position = Vector2(-2109, -331)
+position = Vector2(-1911.5, -331)
 shape = SubResource("RectangleShape2D_uhwdc")
 debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
 

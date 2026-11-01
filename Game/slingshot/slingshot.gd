@@ -9,24 +9,57 @@ var projectile_preload = preload("res://Game/slingshot/slingshot_projectile.tscn
 
 @export var ennemyBounceBar: Area2D
 
-var active_touches = {}
+# The zone's collision shapes now stay enabled all the time, so every touch is always tracked
+# (disabling them made us miss finger releases, which left ghost touches behind).
+# The slingshot only reacts while `active` is true. The red button calls activate(),
+# and the slingshot deactivates itself after firing.
+var active: bool = false
+ 
+# Set when a base finger is lifted while the puller is held (cancelled pull).
+# While set, no new base can be locked. It clears once every finger has been lifted,
+# so the leftover fingers (including the old puller) can't become a new base.
+var locked_out: bool = false
+
 var base_touch_ids = []
 var puller_id = -1
 var anchor_id_1 = -1
 var anchor_id_2 = -1
 
 func _ready():
-	clear_slingshot_visuals()
+	super._ready()
+	set_shapes_disabled(false)
 	reset_slingshot_state()
+	active = false
+
+func activate():
+	reset_slingshot_state()
+	locked_out = false
+	active = true
 
 func _process(_delta):
-	if touch_order_dict.size() == 5 and base_touch_ids.is_empty():
-		base_touch_ids = touch_order_dict.keys()
-	elif touch_order_dict.size() >= 6 and not base_touch_ids.is_empty() and puller_id == -1:
-		var touch_number: int = touch_order_dict.keys().max()
-		if is_valid_puller_position(get_position_from_touch_number(touch_number)):
-			puller_id = touch_number
-			lock_anchors(get_position_from_touch_number(touch_number))
+	if not active:
+		return
+	
+	# A cancelled pull blocks the slingshot until every finger has been lifted
+	if locked_out:
+		if touch_order_dict.is_empty():
+			locked_out = false
+		return
+	
+	if base_touch_ids.is_empty():
+		if touch_order_dict.size() >= 5:
+			var keys = touch_order_dict.keys()
+			keys.sort()
+			base_touch_ids = keys.slice(0, 5)
+	elif puller_id == -1 and touch_order_dict.size() >= 6:
+		for n in touch_order_dict.keys():
+			if n in base_touch_ids:
+				continue
+			var p = get_position_from_touch_number(n)
+			if is_valid_puller_position(p):
+				puller_id = n
+				lock_anchors(p)
+				break
 	
 	if puller_id != -1 and touch_order_dict.keys().has(puller_id):
 		update_visuals()
@@ -58,30 +91,23 @@ func is_valid_puller_position(pos: Vector2) -> bool:
 	# Return true only if the 6th finger is inside this area
 	return hand_rect.has_point(pos)
 
-func evaluate_touch_state(new_touch_index: int, new_touch_pos: Vector2):
-	# If we hit 5 touches and haven't locked a base yet, lock these 5 IDs
-	if touch_order_dict.size() == 5 and base_touch_ids.is_empty():
-		base_touch_ids = touch_order_dict.keys()
-		
-	# If the base is locked and a 6th touch appears, it's the puller
-	elif touch_order_dict.size() >= 6 and not base_touch_ids.is_empty() and puller_id == -1:
-		if is_valid_puller_position(new_touch_pos):
-			puller_id = new_touch_index
-			lock_anchors(new_touch_pos)
-
-func lock_anchors(puller_start_pos: Vector2):
+func lock_anchors(puller_start_pos: Vector2) -> bool:
 	# Create an array of dictionaries containing the base touch IDs and their distances to the puller
 	var distances = []
 	for id in base_touch_ids:
 		if touch_order_dict.keys().has(id):
 			var dist = puller_start_pos.distance_to(get_position_from_touch_number(id))
 			distances.append({"id": id, "distance": dist})
-			
+ 
+	if distances.size() < 2:
+		return false
+ 
 	# Sort to find the two closest points (thumb and index)
 	distances.sort_custom(func(a, b): return a["distance"] < b["distance"])
-	
+ 
 	anchor_id_1 = distances[0]["id"]
 	anchor_id_2 = distances[1]["id"]
+	return true
 	
 func screen_to_local(node: Node2D, screen_pos: Vector2) -> Vector2:
 	return node.get_global_transform_with_canvas().affine_inverse() * screen_pos
@@ -117,32 +143,38 @@ func update_visuals():
 
 func fire_projectile(pull_pos:Vector2):
 	
+	if not touch_order_dict.has(anchor_id_1) or not touch_order_dict.has(anchor_id_2):
+		reset_slingshot_state()
+		return
+ 
 	var a1_pos = get_position_from_touch_number(anchor_id_1)
 	var a2_pos = get_position_from_touch_number(anchor_id_2)
-
+ 
 	var midpoint = (a1_pos + a2_pos) / 2.0
 	var pull_vector = midpoint - pull_pos
 	var direction = pull_vector.normalized()
 	var distance = clamp(pull_pos.distance_to(midpoint), 0, max_pull_distance)
-
+ 
 	var impulse_force = direction * distance * slingshot_power_multiplier
-
+ 
 	# 1. Instantiate the projectile
 	var new_projectile = projectile_preload.instantiate() as RigidBody2D
-
+ 
 	# 2. Add it to the main game scene (so it moves independently of the slingshot node)
 	get_tree().current_scene.add_child(new_projectile)
-
+ 
 	# 3. Set its starting position to the center of the slingshot base
 	var world_midpoint = get_canvas_transform().affine_inverse() * midpoint
 	new_projectile.global_position = world_midpoint
 	new_projectile.collision_mask = ennemyBounceBar.collision_mask
 	new_projectile.collision_layer = ennemyBounceBar.collision_layer
-
+ 
 	# 4. Fire it
 	new_projectile.apply_central_impulse(impulse_force)
-
+ 
+	# 5. One shot per button press: reset and wait for the next activate()
 	reset_slingshot_state()
+	active = false
 
 func reset_slingshot_state():
 	base_touch_ids.clear()
@@ -150,7 +182,6 @@ func reset_slingshot_state():
 	anchor_id_1 = -1
 	anchor_id_2 = -1
 	clear_slingshot_visuals()
-	change_collision_state(true)
 
 func clear_slingshot_visuals():
 	line_left.visible = false
@@ -159,12 +190,21 @@ func clear_slingshot_visuals():
 
 
 func _on_release_touch(touch_number: int, touch_position:Vector2) -> void:
-	if touch_number == puller_id:
+	if not active or touch_number == -1:
+		return
+	if puller_id != -1 and touch_number == puller_id:
 		fire_projectile(touch_position)
 	elif touch_number in base_touch_ids:
+		if puller_id != -1:
+			locked_out = true
 		reset_slingshot_state()
-		
+
 func change_collision_state(state: bool):
+	for child: Node in self.get_children():
+		if child is CollisionShape2D:
+			child.disabled = state
+
+func set_shapes_disabled(state: bool):
 	for child: Node in self.get_children():
 		if child is CollisionShape2D:
 			child.disabled = state

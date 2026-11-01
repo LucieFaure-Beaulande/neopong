@@ -32,15 +32,14 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 		if event.device == EMULATED_DEVICE_ID:
 			return
 		if event.pressed:
+			end_touch(event.index)
 			var touch_number:int = generate_touch_number()
 			touch_order_dict.set(touch_number, event.index)
 			touch_event_dict.set(event.index, event.position)
 			#print("touch: ", event.position)
 			#print("added ", nb_of_touches)
 		else:
-			release_touch.emit(get_touch_from_event_index(event.index), 
-			touch_event_dict.get(event.index))
-			remove_touch_from_event_index(event.index)
+			end_touch(event.index, event.position)
 		
 	if event is InputEventScreenDrag:
 		if event.device == EMULATED_DEVICE_ID:
@@ -54,7 +53,7 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventScreenDrag:
 		if !is_point_in_area(event.position):
-			remove_touch_from_event_index(event.index)
+			end_touch(event.index)
 
 #ça c'est généré mdr
 func is_point_in_area(point: Vector2) -> bool:
@@ -80,15 +79,22 @@ func is_point_in_area(point: Vector2) -> bool:
 			
 	return false
 	
+# Ends a touch: emits release_touch (if the touch is tracked) and then removes it
+# Does nothing for an event index we don't track
+func end_touch(index:int, final_position = null) -> void:
+	var touch:int = get_touch_from_event_index(index)
+	if touch == -1:
+		return
+	if final_position != null:
+		touch_event_dict.set(index, final_position)
+	release_touch.emit(touch, touch_event_dict.get(index, Vector2.ZERO))
+	remove_touch(touch)
 	
 func get_position_from_touch_number(touch:int) -> Vector2:
-	var event_index:int = touch_order_dict.get(touch)
-	if event_index != null:
-		return touch_event_dict.get(event_index)
-	else:
-		print("Unknown touch number : " + str(touch))
+	if not touch_order_dict.has(touch):
 		push_error("Unknown touch number : " + str(touch))
 		return Vector2.ZERO
+	return touch_event_dict.get(touch_order_dict[touch], Vector2.ZERO)
 
 func remove_touch(touch_nb:int) ->void :
 	touch_order_dict.erase(touch_nb)
