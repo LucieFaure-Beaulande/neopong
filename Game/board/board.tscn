@@ -1213,6 +1213,10 @@ position = Vector2(167, 357)
 [node name="vacuum_test_aim_position" type="Marker2D" parent="." unique_id=1271949457]
 position = Vector2(1128, 593)
 
+[connection signal="match_started" from="." to="RebondisseurZoneBleu" method="_on_board_match_started"]
+[connection signal="match_started" from="." to="RebondisseurZoneRouge" method="_on_board_match_started"]
+[connection signal="players_ready" from="RebondisseurZoneBleu" to="." method="_on_rebondisseur_zone_bleu_players_ready"]
+[connection signal="players_ready" from="RebondisseurZoneRouge" to="." method="_on_rebondisseur_zone_rouge_players_ready"]
 [connection signal="animation_finished" from="Clock" to="Clock" method="_on_animation_finished"]
 [connection signal="animation_finished" from="Clock" to="ResultRed" method="_on_clock_animation_finished"]
 [connection signal="animation_finished" from="Clock" to="ResultBlue" method="_on_clock_animation_finished"]
@@ -1220,7 +1224,3 @@ position = Vector2(1128, 593)
 [connection signal="animation_finished" from="Clock" to="QuitButton" method="_on_clock_animation_finished"]
 [connection signal="pressed" from="ReplayButton" to="ReplayButton" method="_on_pressed"]
 [connection signal="pressed" from="QuitButton" to="QuitButton" method="_on_pressed"]
-[connection signal="match_started" from="." to="RebondisseurZoneBleu" method="_on_board_match_started"]
-[connection signal="match_started" from="." to="RebondisseurZoneRouge" method="_on_board_match_started"]
-[connection signal="players_ready" from="RebondisseurZoneBleu" to="." method="_on_rebondisseur_zone_bleu_players_ready"]
-[connection signal="players_ready" from="RebondisseurZoneRouge" to="." method="_on_rebondisseur_zone_rouge_players_ready"]

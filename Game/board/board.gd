@@ -79,10 +79,10 @@ func _process(_delta: float) -> void:
 		if(game_timer.time_left <= milestone):
 			clock.update_timer()
 			milestone -= step
-      
+	  
 	if test_mode:
 		handle_test_script()
-    
+	
 	if Input.is_action_just_pressed("ui_accept") and test_mode:
 		current_phase += 1
 	
@@ -91,9 +91,9 @@ func _process(_delta: float) -> void:
 
 func _on_ball_first_launched() -> void:
 	if game_timer.is_stopped() and not is_game_over:
-  		if not test_mode:
-		    game_timer.start()
-		    clock.play()
+		if not test_mode:
+			game_timer.start()
+			clock.play()
 
 
 func _on_game_timer_timeout() -> void:
