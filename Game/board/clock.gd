@@ -12,3 +12,6 @@ func update_timer() -> void:
 func _on_animation_finished() -> void:
 	if(animation == "tick16"):
 		visible = false
+
+func turn_invisible():
+	visible = false
