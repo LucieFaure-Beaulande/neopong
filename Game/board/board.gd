@@ -39,8 +39,19 @@ var red_team_ready:bool = false
 
 var current_phase:int = 0
 
+@onready var slingshot = $Slingshot
+@onready var vacuum = $VacuumZone
 
+var previous_phase: int = -1
 
+# Shows the placement previews of each power only during its own test phase
+func update_previews() -> void:
+	if current_phase == previous_phase:
+		return
+	previous_phase = current_phase
+	vacuum.set_placement_previews_visible(test_mode and current_phase == 1)
+	slingshot.set_placement_previews_visible(test_mode and current_phase == 2)
+		
 func _ready() -> void:
 	if test_mode:
 		test_mode_activated.emit()
@@ -69,6 +80,8 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("ui_accept") and test_mode:
 		current_phase += 1
+	
+	update_previews()
 
 func _on_ball_first_launched() -> void:
 	if game_timer.is_stopped() and not is_game_over:

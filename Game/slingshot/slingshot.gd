@@ -21,8 +21,19 @@ var puller_id = -1
 var anchor_id_1 = -1
 var anchor_id_2 = -1
 
+const PLACEMENT_PREVIEW_COUNT: int = 6
+
+# Shows or hides PlacementPreview, PlacementPreview2, ..., PlacementPreview6
+func set_placement_previews_visible(show_previews: bool) -> void:
+	for i in range(1, PLACEMENT_PREVIEW_COUNT + 1):
+		var preview_name: String = "PlacementPreview" if i == 1 else "PlacementPreview" + str(i)
+		var preview := get_node_or_null(preview_name) as CanvasItem
+		if preview != null:
+			preview.visible = show_previews
+
 func _ready():
 	clear_slingshot_visuals()
+	set_placement_previews_visible(false)
 	start_preview_loop()
 
 func _process(_delta):

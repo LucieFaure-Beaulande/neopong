@@ -22,8 +22,19 @@ var preview_tween: Tween
 
 @onready var vacuum: Node2D = $Vacuum
 
+const PLACEMENT_PREVIEW_COUNT: int = 7
+
+# Shows or hides PlacementPreview, PlacementPreview2, ..., PlacementPreview7
+func set_placement_previews_visible(show_previews: bool) -> void:
+	for i in range(1, PLACEMENT_PREVIEW_COUNT + 1):
+		var preview_name: String = "PlacementPreview" if i == 1 else "PlacementPreview" + str(i)
+		var preview := get_node_or_null(preview_name) as CanvasItem
+		if preview != null:
+			preview.visible = show_previews
+
 func _ready() -> void:
 	reset()
+	set_placement_previews_visible(false)
 	collision_mask_updated.emit(collision_mask)
 	start_preview_loop()
 	
