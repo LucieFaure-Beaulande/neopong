@@ -47,6 +47,8 @@ func _ready():
 	super._ready()
 	set_shapes_disabled(false)
 	reset_slingshot_state()
+	set_placement_previews_visible(false)
+	start_preview_loop()
 	active = false
 
 func activate():

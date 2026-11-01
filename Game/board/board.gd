@@ -42,8 +42,8 @@ var red_team_ready:bool = false
 
 var current_phase:int = 0
 
-@onready var slingshot = $Slingshot
-@onready var vacuum = $VacuumZone
+@onready var slingshot = $SlingshotRed
+@onready var vacuum = $VacuumZoneBlue
 
 var previous_phase: int = -1
 
