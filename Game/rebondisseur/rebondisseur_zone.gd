@@ -47,12 +47,12 @@ func _ready() -> void:
 		if child is Area2D:
 			child.collision_layer = collision_layer
 			child.collision_mask = collision_mask
-			if child is CollisionShape2D:
-				if child.shape and child.shape is RectangleShape2D:
-					var local_center = child.position
-					#parent_node.to_global(local_center)
-					placement_preview_a.global_position = local_center + Vector2(0,_distance_after_break/2)
-					placement_preview_b.global_position = local_center + Vector2(0,-_distance_after_break/2)
+		if child is CollisionShape2D:
+			if child.shape and child.shape is RectangleShape2D:
+				var local_center = child.position
+				#parent_node.to_global(local_center)
+				placement_preview_a.global_position = local_center + Vector2(0,_distance_after_break/2)
+				placement_preview_b.global_position = local_center + Vector2(0,-_distance_after_break/2)
 
 	# Style visuel de la ligne
 	line2d.width = 6.0
