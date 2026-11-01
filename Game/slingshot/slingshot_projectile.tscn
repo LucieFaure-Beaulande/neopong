@@ -4,6 +4,21 @@
 friction = 0.0
 bounce = 1.0
 
+[sub_resource type="GDScript" id="GDScript_t4sbq"]
+script/source = "extends Node
+
+@onready var collision_shape_2d: CollisionShape2D = $CollisionShape2D
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+"
+
 [sub_resource type="SphereMesh" id="SphereMesh_43rjr"]
 radius = 10.0
 height = 20.0
@@ -11,10 +26,9 @@ height = 20.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_3j5br"]
 
 [node name="SlingshotProjectile" type="RigidBody2D" unique_id=627719562 groups=["projectile"]]
-collision_layer = 4
-collision_mask = 4
 physics_material_override = SubResource("PhysicsMaterial_71ro0")
 gravity_scale = 0.0
+script = SubResource("GDScript_t4sbq")
 
 [node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=1398624877]
 mesh = SubResource("SphereMesh_43rjr")

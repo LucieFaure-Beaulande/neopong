@@ -2,6 +2,7 @@ extends TextureButton
 
 @export var progressBarRed : ProgressBar
 @export var slingshotButtonRed : TextureButton
+@export var vacuum_red_zone : PrivateTouchZone
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -14,9 +15,10 @@ func _process(delta: float) -> void:
 
 func _pressed() -> void:
 	disabled = true
-	progressBarRed.value = 0
+	progressBarRed.isDepleting = true
 	progressBarRed.isFull = false
 	slingshotButtonRed.disabled = true
+	vacuum_red_zone.activate()
 
 func enableButton():
 	disabled = false
