@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://bcfdnwq3ce1wa" path="res://UI/Sprites/playbtn.png" id="1_hsjr3"]
 [ext_resource type="Script" uid="uid://g82jseulempo" path="res://UI/play.gd" id="1_qvxag"]
 [ext_resource type="Texture2D" uid="uid://bc6ikcx3khepc" path="res://UI/Sprites/title.png" id="5_bqnt0"]
+[ext_resource type="Script" uid="uid://guaj1koqxmpw" path="res://UI/demo.gd" id="5_i6qe6"]
 [ext_resource type="Texture2D" uid="uid://b5bnc6h6ekho2" path="res://UI/Sprites/demobtn.png" id="6_i6qe6"]
 
 [node name="Node2D" type="Node2D" unique_id=358723649]
@@ -43,6 +44,8 @@ offset_top = 504.0
 offset_right = 798.0
 offset_bottom = 620.0
 texture_normal = ExtResource("6_i6qe6")
+script = ExtResource("5_i6qe6")
 
 [connection signal="pressed" from="Play" to="Play" method="_on_pressed"]
 [connection signal="pressed" from="Play2" to="Play2" method="_on_pressed"]
+[connection signal="pressed" from="TextureButton" to="TextureButton" method="_on_pressed"]
