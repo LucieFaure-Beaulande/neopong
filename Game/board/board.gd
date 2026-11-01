@@ -58,6 +58,7 @@ func update_previews() -> void:
 func _ready() -> void:
 	if test_mode:
 		test_mode_activated.emit()
+		clock.turn_invisible()
 	
 	game_timer = Timer.new()
 	game_timer.one_shot = true
