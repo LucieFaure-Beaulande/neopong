@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://g3hnqpmln6o0" path="res://Game/board/board.gd" id="1_m2ylt"]
 [ext_resource type="PackedScene" uid="uid://8kiwc2w1jjdf" path="res://Game/vacuum/vacuum_zone.tscn" id="1_qj6ra"]
+[ext_resource type="PackedScene" uid="uid://bsrq1avual02q" path="res://Game/board/Countdown.tscn" id="2_p5r8g"]
 [ext_resource type="PackedScene" uid="uid://bc3kym46wht34" path="res://Game/goalzone/goalzone.tscn" id="2_uliie"]
 [ext_resource type="PackedScene" uid="uid://bqpl5o1ki1st4" path="res://Game/slingshot/slingshot.tscn" id="2_vsefh"]
 [ext_resource type="PackedScene" uid="uid://7m6r7da5rdw0" path="res://Game/rebondisseur/RebondisseurZone.tscn" id="3_vsefh"]
@@ -207,6 +208,11 @@ size = Vector2(1314, 29)
 [node name="Board" type="Node2D" unique_id=1187871317]
 script = ExtResource("1_m2ylt")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1851047129]
+
+[node name="Countdown" parent="CanvasLayer" unique_id=356370354 instance=ExtResource("2_p5r8g")]
+visible = false
+
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1737327288]
 offset_right = 640.0
 offset_bottom = 720.0
@@ -250,6 +256,8 @@ debug_color = Color(0.7375592, 0.46834207, 0.031818468, 0.41960785)
 position = Vector2(1115, 345)
 collision_layer = 2
 collision_mask = 2
+nb_fingers_for_base = 4
+nb_fingers_for_aim = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZone" unique_id=728963688]
 position = Vector2(38, 19)
@@ -362,3 +370,17 @@ texture_disabled = ExtResource("22_s3dvk")
 script = ExtResource("24_ipnii")
 progressBarBlue = NodePath("../ProgressBarBlue")
 vacuumButtonBlue = NodePath("../VacuumButtonBlue")
+
+[node name="slingshot_test_position" type="Marker2D" parent="." unique_id=2001301279]
+position = Vector2(998, 358)
+
+[node name="vacuum_test_position" type="Marker2D" parent="." unique_id=751504242]
+position = Vector2(167, 357)
+
+[node name="vacuum_test_aim_position" type="Marker2D" parent="." unique_id=1271949457]
+position = Vector2(1128, 593)
+
+[connection signal="match_started" from="." to="RebondisseurZoneBleu" method="_on_board_match_started"]
+[connection signal="match_started" from="." to="RebondisseurZoneRouge" method="_on_board_match_started"]
+[connection signal="players_ready" from="RebondisseurZoneBleu" to="." method="_on_rebondisseur_zone_bleu_players_ready"]
+[connection signal="players_ready" from="RebondisseurZoneRouge" to="." method="_on_rebondisseur_zone_rouge_players_ready"]
