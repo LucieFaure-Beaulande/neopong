@@ -1,6 +1,14 @@
 extends PrivateTouchZone
 var projectile_preload = preload("res://Game/slingshot/slingshot_projectile.tscn")
 
+@onready var placement_preview_6: Node2D = $PlacementPreview6
+
+@export var preview_start_position: Vector2 = Vector2(221, 424)
+@export var preview_end_position: Vector2 = Vector2(121, 350)
+@export var preview_slide_duration: float = 1.5
+
+var preview_tween: Tween
+
 @onready var line_left = $LineLeft
 @onready var line_right = $LineRight
 @onready var line_trajectory = $LineTrajectory
@@ -24,6 +32,16 @@ var base_touch_ids = []
 var puller_id = -1
 var anchor_id_1 = -1
 var anchor_id_2 = -1
+
+const PLACEMENT_PREVIEW_COUNT: int = 6
+
+# Shows or hides PlacementPreview, PlacementPreview2, ..., PlacementPreview6
+func set_placement_previews_visible(show_previews: bool) -> void:
+	for i in range(1, PLACEMENT_PREVIEW_COUNT + 1):
+		var preview_name: String = "PlacementPreview" if i == 1 else "PlacementPreview" + str(i)
+		var preview := get_node_or_null(preview_name) as CanvasItem
+		if preview != null:
+			preview.visible = show_previews
 
 func _ready():
 	super._ready()
@@ -208,3 +226,26 @@ func set_shapes_disabled(state: bool):
 	for child: Node in self.get_children():
 		if child is CollisionShape2D:
 			child.disabled = state
+func _on_input_disabled() -> void:
+	# Cancels any slingshot being armed, so nothing is fired and the lines disappear
+	reset_slingshot_state()
+
+# Slides the preview dot from start to end, then snaps back to start, forever
+func start_preview_loop() -> void:
+	# Make sure we never run two tweens at the same time
+	stop_preview_loop()
+
+	placement_preview_6.position = preview_start_position
+
+	preview_tween = create_tween()
+	preview_tween.set_loops() # infinite loop
+	preview_tween.tween_property(
+		placement_preview_6, "position", preview_end_position, preview_slide_duration
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	# Instantly send the dot back to its starting point before the next cycle
+	preview_tween.tween_callback(func(): placement_preview_6.position = preview_start_position)
+
+# Stops the loop and leaves the dot where it currently is
+func stop_preview_loop() -> void:
+	if preview_tween != null and preview_tween.is_valid():
+		preview_tween.kill()

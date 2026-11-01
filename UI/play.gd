@@ -1,15 +1,22 @@
 extends TextureButton
 
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
-
 func _on_pressed() -> void:
-	get_tree().change_scene_to_file.call_deferred("res://Game/board/board.tscn")
+	_start_game.call_deferred()
+
+
+func _start_game() -> void:
+	var board_scene: PackedScene = load("res://Game/board/board.tscn")
+	var board = board_scene.instantiate()
+
+	# Must be set before the node enters the tree,
+	# so that _ready() emits test_mode_activated with the right value
+	board.test_mode = false
+
+	var tree := get_tree()
+	var old_scene := tree.current_scene
+
+	# Replace the current scene (title screen) with the board
+	tree.root.add_child(board)
+	tree.current_scene = board
+	old_scene.queue_free()

@@ -19,6 +19,9 @@ var touch_event_dict:Dictionary[int, Vector2] = {}
 # in the end this is probably not the best solution but it does its job
 var nb_of_touches:int = 0
 
+# When false, every touch is ignored (used when the game is over)
+var input_enabled: bool = true
+
 # We needed a way to see when a specific touch is let go off for the sling shot 
 signal release_touch(touch_number:int, touch_position:Vector2)
 
@@ -28,6 +31,9 @@ func _ready() -> void:
 	input_pickable = true
 
 func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
+	if not input_enabled:
+		return
+
 	if event is InputEventScreenTouch:
 		if event.device == EMULATED_DEVICE_ID:
 			return
@@ -51,6 +57,8 @@ func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void
 
 # if drag goes outside the box, we remove the touch
 func _unhandled_input(event: InputEvent) -> void:
+	if not input_enabled:
+		return
 	if event is InputEventScreenDrag:
 		if !is_point_in_area(event.position):
 			end_touch(event.index)
@@ -91,7 +99,16 @@ func end_touch(index:int, final_position = null) -> void:
 	remove_touch(touch)
 	
 func get_position_from_touch_number(touch:int) -> Vector2:
-	if not touch_order_dict.has(touch):
+	if !touch_order_dict.has(touch):
+		print("Unknown touch number : " + str(touch))
+		push_error("Unknown touch number : " + str(touch))
+		return Vector2.ZERO
+		
+	var event_index:int = touch_order_dict.get(touch)
+	if event_index != null:
+		return touch_event_dict.get(event_index)
+	else:
+		print("Unknown touch number : " + str(touch))
 		push_error("Unknown touch number : " + str(touch))
 		return Vector2.ZERO
 	return touch_event_dict.get(touch_order_dict[touch], Vector2.ZERO)
@@ -127,3 +144,16 @@ func generate_touch_number() -> int:
 	
 func get_touch_ammount() -> int:
 	return touch_order_dict.keys().size()
+
+# Enables or disables every touch of this zone (used when the game is over)
+func set_input_enabled(enabled: bool) -> void:
+	input_enabled = enabled
+	if not enabled:
+		touch_order_dict.clear()
+		touch_event_dict.clear()
+		nb_of_touches = 0
+		_on_input_disabled()
+
+# Hook meant to be overridden by child classes to clean up their own state
+func _on_input_disabled() -> void:
+	pass

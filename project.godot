@@ -11,9 +11,14 @@ config_version=5
 [application]
 
 config/name="Neopong"
-run/main_scene="uid://o3merluvrn1h"
+run/main_scene="uid://c5lrq8r70leva"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Scores="*uid://du65i3g87b4f7"
+TestGlobals="*uid://xp71rd7bnsmv"
 
 [display]
 
@@ -29,6 +34,7 @@ window/handheld/orientation=4
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"

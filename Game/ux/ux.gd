@@ -1,39 +1,24 @@
 extends CanvasLayer
 class_name ScoreBoard
-# Ajoute ce node (CanvasLayer + ce script) dans ta scène principale.
-# Il se connecte tout seul à toutes les GoalZone et affiche les scores.
+# Add this node (CanvasLayer + this script) to the main scene.
+# It connects itself to every GoalZone and displays the scores, the timer and the end screen.
 
 var scores := {
 	GoalZone.Team.BLEUE: 0,
 	GoalZone.Team.ROUGE: 0,
 }
-var labels := {}
 
 @export var progress_bar_red: ProgressBar
 @export var progress_bar_blue: ProgressBar
 
+@export var blue_score: Label
+@export var red_score: Label
+
+@export var blue_result: AnimatedSprite2D
+@export var red_result: AnimatedSprite2D
+
 func _ready() -> void:
-	_build_ui()
 	_connect_zones.call_deferred()
-
-func _build_ui() -> void:
-	var box := HBoxContainer.new()
-	box.set_anchors_preset(Control.PRESET_CENTER_TOP)
-	box.add_theme_constant_override("separation", 40)
-	add_child(box)
-
-	var defs := [
-		[GoalZone.Team.BLEUE, "Équipe bleue", Color(0.35, 0.55, 1.0)],
-		[GoalZone.Team.ROUGE, "Équipe rouge", Color(1.0, 0.35, 0.35)],
-	]
-	for def in defs:
-		var label := Label.new()
-		label.add_theme_font_size_override("font_size", 32)
-		label.add_theme_color_override("font_color", def[2])
-		label.set_meta("title", def[1])
-		box.add_child(label)
-		labels[def[0]] = label
-		_refresh(def[0])
 
 func _connect_zones() -> void:
 	for zone in get_tree().get_nodes_in_group("goal_zone"):
@@ -49,5 +34,21 @@ func _on_goal_scored(team: int) -> void:
 	_refresh(team)
 
 func _refresh(team: int) -> void:
-	var label: Label = labels[team]
-	label.text = "%s : %d" % [label.get_meta("title"), scores[team]]
+	if(team == 0):
+		blue_score.change_text(scores[team])
+	else:
+		red_score.change_text(scores[team])
+
+# Shows the end screen with the final score and the winner (or a draw)
+func show_game_over() -> void:
+	var blue: int = scores[GoalZone.Team.BLEUE]
+	var red: int = scores[GoalZone.Team.ROUGE]
+	if blue > red:
+		blue_result.show_result(1)
+		red_result.show_result(2)
+	elif red > blue:
+		blue_result.show_result(2)
+		red_result.show_result(1)
+	else:
+		blue_result.show_result(3)
+		red_result.show_result(3)
