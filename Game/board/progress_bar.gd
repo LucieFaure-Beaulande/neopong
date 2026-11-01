@@ -18,7 +18,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if not isDepleting:
-		value += 5
+		value += 1
 		if (value < max_value / 2):
 			var fill_style = get_theme_stylebox("fill").duplicate()
 			fill_style.bg_color = Color.RED
