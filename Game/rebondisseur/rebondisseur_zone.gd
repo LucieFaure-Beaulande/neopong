@@ -15,6 +15,7 @@ var line_broken: bool = false
 @onready var line2d: Line2D = $AnimatableBody2D/Line2D
 
 @onready var area_shape: CollisionShape2D = $AnimatableBody2D/Area2D/CollisionShape2D
+@onready var break_area: Area2D = $AnimatableBody2D/Area2D
 
 
 var _segment: SegmentShape2D
@@ -29,6 +30,7 @@ func _ready() -> void:
 	_segment = SegmentShape2D.new()
 	collision_shape.shape = _segment
 	area_shape.shape = _segment
+	break_area.collision_mask |= collision_layer
 	collision_shape.disabled = true
 	
 	for child: Node in get_children():
@@ -124,6 +126,8 @@ func _update_visual_line(delta: float) -> void:
 
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
-	if body != self:
-		print(body)
+	if body != self and not line_broken and _has_two_touches():
 		line_broken = true
+		_broken_timer = broken_display_time
+		_broken_p1 = get_position_from_touch_number(1)
+		_broken_p2 = get_position_from_touch_number(2)

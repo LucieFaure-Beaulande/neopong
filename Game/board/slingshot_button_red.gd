@@ -6,7 +6,7 @@ extends TextureButton
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	progressBarRed.barFull.connect(enableButton)
+	progressBarRed.barHalfFull.connect(enableButton)
 	disabled = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -15,10 +15,11 @@ func _process(delta: float) -> void:
 
 func _pressed() -> void:
 	disabled = true
-	progressBarRed.value = 0
+	progressBarRed.value -= progressBarRed.max_value / 2
+	progressBarRed.isHalfFull = false
 	progressBarRed.isFull = false
 	vacuumButtonRed.disabled = true
 	slingshot_red.activate()
 
-func enableButton():
-	disabled = false
+func enableButton(state: bool):
+	disabled = !state

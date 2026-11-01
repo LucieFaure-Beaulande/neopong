@@ -270,6 +270,7 @@ ennemyBounceBar = NodePath("../RebondisseurZoneRouge")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlingshotBlue" unique_id=167678902]
 position = Vector2(1159, 356)
 shape = SubResource("RectangleShape2D_43rjr")
+disabled = true
 debug_color = Color(0.7375592, 0.46834207, 0.031818468, 0.41960785)
 
 [node name="VacuumZoneBlue" parent="." unique_id=1960340670 node_paths=PackedStringArray("progressBar") instance=ExtResource("1_qj6ra")]
@@ -281,6 +282,7 @@ progressBar = NodePath("../ProgressBarBlue")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZoneBlue" unique_id=728963688]
 position = Vector2(38, 19)
 shape = SubResource("RectangleShape2D_uhwdc")
+disabled = true
 debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
 
 [node name="VacuumZoneRed" parent="." unique_id=1981078313 node_paths=PackedStringArray("progressBar") instance=ExtResource("1_qj6ra")]

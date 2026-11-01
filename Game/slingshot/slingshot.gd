@@ -167,7 +167,7 @@ func fire_projectile(pull_pos:Vector2):
 	var world_midpoint = get_canvas_transform().affine_inverse() * midpoint
 	new_projectile.global_position = world_midpoint
 	new_projectile.collision_mask = ennemyBounceBar.collision_mask
-	new_projectile.collision_layer = ennemyBounceBar.collision_layer
+	new_projectile.collision_layer = collision_layer | ennemyBounceBar.collision_layer
  
 	# 4. Fire it
 	new_projectile.apply_central_impulse(impulse_force)
