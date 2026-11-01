@@ -6,7 +6,7 @@ signal test_mode_activated
 signal match_started
 
 # Total duration of a game, in seconds (3 minutes by default)
-@export var game_duration: float = 10.0
+@export var game_duration: float = 180.0
 var milestone = 0.0
 var step = 0.0
 
