@@ -1264,6 +1264,7 @@ position = Vector2(1128, 593)
 [connection signal="match_started" from="." to="RebondisseurZoneBleu" method="_on_board_match_started"]
 [connection signal="match_started" from="." to="RebondisseurZoneRouge" method="_on_board_match_started"]
 [connection signal="countdown_finished" from="CanvasLayer/Countdown" to="ProgressBarRed" method="_on_countdown_countdown_finished"]
+[connection signal="countdown_finished" from="CanvasLayer/Countdown" to="ProgressBarBlue" method="_on_countdown_countdown_finished"]
 [connection signal="players_ready" from="RebondisseurZoneBleu" to="." method="_on_rebondisseur_zone_bleu_players_ready"]
 [connection signal="players_ready" from="RebondisseurZoneRouge" to="." method="_on_rebondisseur_zone_rouge_players_ready"]
 [connection signal="animation_finished" from="Clock" to="Clock" method="_on_animation_finished"]

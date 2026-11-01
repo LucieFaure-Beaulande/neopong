@@ -1,5 +1,7 @@
 extends TextureButton
 
+var game_over: bool
+
 @export var progressBarRed : ProgressBar
 @export var slingshotButtonRed : TextureButton
 @export var vacuum_red_zone : PrivateTouchZone
@@ -8,17 +10,23 @@ extends TextureButton
 func _ready() -> void:
 	progressBarRed.barFull.connect(enableButton)
 	disabled = true
+	game_over = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if game_over and !disabled:
+		disabled = true
 
 func _pressed() -> void:
-	disabled = true
-	progressBarRed.isDepleting = true
-	progressBarRed.isFull = false
-	slingshotButtonRed.disabled = true
-	vacuum_red_zone.activate()
+	if !game_over:
+		disabled = true
+		progressBarRed.isDepleting = true
+		progressBarRed.isFull = false
+		slingshotButtonRed.disabled = true
+		vacuum_red_zone.activate()
 
 func enableButton():
 	disabled = false
+
+func on_game_over():
+	game_over = true

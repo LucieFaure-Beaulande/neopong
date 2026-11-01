@@ -21,6 +21,7 @@ func on_game_over():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if gameStarted:
 		if not isDepleting:
 			value += 1
 			if (value < max_value / 2):

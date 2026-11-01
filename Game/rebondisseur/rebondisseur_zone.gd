@@ -184,6 +184,5 @@ func _hide_preview(hide:bool) -> void:
 	placement_preview_a.visible = !hide
 	placement_preview_b.visible = !hide
 
-
 func _on_board_match_started() -> void:
 	pre_match = false

@@ -18,7 +18,6 @@ config/icon="res://icon.svg"
 [autoload]
 
 Scores="*uid://du65i3g87b4f7"
-TestGlobals="*uid://xp71rd7bnsmv"
 
 [display]
 
