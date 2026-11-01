@@ -2,12 +2,41 @@
 
 [ext_resource type="Script" uid="uid://cp1ob1qybs2g6" path="res://Game/vacuum/vacuum_zone.gd" id="1_fomdi"]
 [ext_resource type="PackedScene" uid="uid://qxjcs8kh6whj" path="res://Game/vacuum/vacuum.tscn" id="2_hsjx8"]
+[ext_resource type="PackedScene" uid="uid://bvm6nmerlxma3" path="res://Game/rebondisseur/PlacementPreview.tscn" id="3_hsjx8"]
 
 [node name="VacuumZone" type="Area2D" unique_id=1960340670]
 script = ExtResource("1_fomdi")
 metadata/_custom_type_script = "uid://cbynmiekcj4to"
 
 [node name="Vacuum" parent="." unique_id=1938523004 instance=ExtResource("2_hsjx8")]
+
+[node name="PlacementPreview2" parent="." unique_id=699951411 instance=ExtResource("3_hsjx8")]
+position = Vector2(95, -46)
+dot_color = Color(0.3019608, 0.47843137, 0.5647059, 1)
+
+[node name="PlacementPreview5" parent="." unique_id=1869650761 instance=ExtResource("3_hsjx8")]
+position = Vector2(81, 35)
+dot_color = Color(0.3019608, 0.47843137, 0.5647059, 1)
+
+[node name="PlacementPreview3" parent="." unique_id=427601274 instance=ExtResource("3_hsjx8")]
+position = Vector2(53, 20)
+dot_color = Color(0.3019608, 0.47843137, 0.5647059, 1)
+
+[node name="PlacementPreview4" parent="." unique_id=50048303 instance=ExtResource("3_hsjx8")]
+position = Vector2(48, -29)
+dot_color = Color(0.3019608, 0.47843137, 0.5647059, 1)
+
+[node name="PlacementPreview6" parent="." unique_id=920446610 instance=ExtResource("3_hsjx8")]
+position = Vector2(34, 0)
+dot_color = Color(0.30325326, 0.47752488, 0.5646887, 1)
+
+[node name="PlacementPreview7" parent="." unique_id=793168566 instance=ExtResource("3_hsjx8")]
+position = Vector2(-28, -1)
+dot_color = Color(0.34529662, 0.49409926, 0.36710477, 1)
+
+[node name="PlacementPreview" parent="." unique_id=972751513 instance=ExtResource("3_hsjx8")]
+position = Vector2(-3, -56)
+dot_color = Color(0.34509805, 0.49411765, 0.36862746, 1)
 
 [connection signal="collision_mask_updated" from="." to="Vacuum" method="_on_vacuum_zone_collision_mask_updated"]
 [connection signal="vacuum_enabled" from="." to="Vacuum" method="_on_vacuum_zone_vacuum_enabled"]

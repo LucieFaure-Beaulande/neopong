@@ -1,6 +1,14 @@
 extends PrivateTouchZone
 var projectile_preload = preload("res://Game/slingshot/slingshot_projectile.tscn")
 
+@onready var placement_preview_6: Node2D = $PlacementPreview6
+
+@export var preview_start_position: Vector2 = Vector2(221, 424)
+@export var preview_end_position: Vector2 = Vector2(121, 350)
+@export var preview_slide_duration: float = 1.5
+
+var preview_tween: Tween
+
 @onready var line_left = $LineLeft
 @onready var line_right = $LineRight
 @onready var line_trajectory = $LineTrajectory
@@ -15,6 +23,7 @@ var anchor_id_2 = -1
 
 func _ready():
 	clear_slingshot_visuals()
+	start_preview_loop()
 
 func _process(_delta):
 	if touch_order_dict.size() == 5 and base_touch_ids.is_empty():
@@ -161,3 +170,23 @@ func _on_release_touch(touch_number: int, touch_position:Vector2) -> void:
 func _on_input_disabled() -> void:
 	# Cancels any slingshot being armed, so nothing is fired and the lines disappear
 	reset_slingshot_state()
+
+# Slides the preview dot from start to end, then snaps back to start, forever
+func start_preview_loop() -> void:
+	# Make sure we never run two tweens at the same time
+	stop_preview_loop()
+
+	placement_preview_6.position = preview_start_position
+
+	preview_tween = create_tween()
+	preview_tween.set_loops() # infinite loop
+	preview_tween.tween_property(
+		placement_preview_6, "position", preview_end_position, preview_slide_duration
+	).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	# Instantly send the dot back to its starting point before the next cycle
+	preview_tween.tween_callback(func(): placement_preview_6.position = preview_start_position)
+
+# Stops the loop and leaves the dot where it currently is
+func stop_preview_loop() -> void:
+	if preview_tween != null and preview_tween.is_valid():
+		preview_tween.kill()
