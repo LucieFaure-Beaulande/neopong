@@ -66,6 +66,8 @@ func _ready() -> void:
 	step = game_duration/16
 	milestone = game_duration-step
 	game_timer.timeout.connect(_on_game_timer_timeout)
+	game_timer.timeout.connect(progress_bar_blue.on_game_over)
+	game_timer.timeout.connect(progress_bar_red.on_game_over)
 	add_child(game_timer)
 
 	# The timer only starts when the ball is launched for the first time
