@@ -187,10 +187,10 @@ sources/7 = SubResource("TileSetAtlasSource_gwtj2")
 sources/8 = SubResource("TileSetAtlasSource_v7i47")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_43rjr"]
-size = Vector2(642.25, 700)
+size = Vector2(246.25, 700)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uhwdc"]
-size = Vector2(651, 718.5)
+size = Vector2(258, 718.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vsefh"]
 size = Vector2(382, 718)
@@ -258,7 +258,7 @@ collision_mask = 4
 ennemyBounceBar = NodePath("../RebondisseurZoneBleu")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlingshotRed" unique_id=1234964609]
-position = Vector2(321.875, 357)
+position = Vector2(123.875, 357)
 shape = SubResource("RectangleShape2D_43rjr")
 debug_color = Color(0.7375592, 0.46834207, 0.031818468, 0.41960785)
 
@@ -270,7 +270,6 @@ ennemyBounceBar = NodePath("../RebondisseurZoneRouge")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SlingshotBlue" unique_id=167678902]
 position = Vector2(1159, 356)
 shape = SubResource("RectangleShape2D_43rjr")
-disabled = true
 debug_color = Color(0.7375592, 0.46834207, 0.031818468, 0.41960785)
 
 [node name="VacuumZoneBlue" parent="." unique_id=1960340670 node_paths=PackedStringArray("progressBar") instance=ExtResource("1_qj6ra")]
@@ -282,7 +281,6 @@ progressBar = NodePath("../ProgressBarBlue")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZoneBlue" unique_id=728963688]
 position = Vector2(38, 19)
 shape = SubResource("RectangleShape2D_uhwdc")
-disabled = true
 debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
 
 [node name="VacuumZoneRed" parent="." unique_id=1981078313 node_paths=PackedStringArray("progressBar") instance=ExtResource("1_qj6ra")]
@@ -292,7 +290,7 @@ collision_mask = 4
 progressBar = NodePath("../ProgressBarRed")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZoneRed" unique_id=1505698489]
-position = Vector2(-1911.5, -331)
+position = Vector2(-2108, -331)
 shape = SubResource("RectangleShape2D_uhwdc")
 debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
 
@@ -386,7 +384,7 @@ script = ExtResource("23_ipnii")
 progressBarRed = NodePath("../ProgressBarRed")
 vacuumButtonRed = NodePath("../VacuumButtonRed")
 
-[node name="VacuumButtonBlue" type="TextureButton" parent="." unique_id=572049284 node_paths=PackedStringArray("progressBarBlue", "slingshotButtonBlue")]
+[node name="VacuumButtonBlue" type="TextureButton" parent="." unique_id=572049284 node_paths=PackedStringArray("progressBarBlue", "slingshotButtonBlue", "vacuum_blue_zone")]
 offset_left = 1192.0
 offset_top = 465.0
 offset_right = 1246.0
@@ -397,6 +395,7 @@ texture_disabled = ExtResource("19_v7i47")
 script = ExtResource("23_s3dvk")
 progressBarBlue = NodePath("../ProgressBarBlue")
 slingshotButtonBlue = NodePath("../SlingshotButtonBlue")
+vacuum_blue_zone = NodePath("../VacuumZoneBlue")
 
 [node name="SlingshotButtonBlue" type="TextureButton" parent="." unique_id=322878962 node_paths=PackedStringArray("progressBarBlue", "vacuumButtonBlue")]
 offset_left = 1192.0
