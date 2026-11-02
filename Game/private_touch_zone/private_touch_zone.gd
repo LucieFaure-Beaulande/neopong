@@ -25,6 +25,7 @@ var input_enabled: bool = true
 # We needed a way to see when a specific touch is let go off for the sling shot 
 signal release_touch(touch_number:int, touch_position:Vector2)
 
+
 const EMULATED_DEVICE_ID:int = -1
 
 func _ready() -> void:

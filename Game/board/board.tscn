@@ -118,18 +118,6 @@ bounce = 1.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3j5br"]
 size = Vector2(1314, 29)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jfqx4"]
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p5r8g"]
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-corner_detail = 16
 [sub_resource type="AtlasTexture" id="AtlasTexture_0rlka"]
 atlas = ExtResource("27_jfqx4")
 region = Rect2(0, 0, 50, 50)
@@ -706,6 +694,19 @@ animations = [{
 "speed": 3.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jfqx4"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_p5r8g"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+corner_detail = 16
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_3e32f"]
 atlas = ExtResource("32_ugljs")
 region = Rect2(0, 0, 69, 32)
@@ -1050,9 +1051,9 @@ debug_color = Color(0.7375592, 0.46834207, 0.031818468, 0.41960785)
 position = Vector2(1115, 345)
 collision_layer = 2
 collision_mask = 2
-progressBar = NodePath("../ProgressBarBlue")
 nb_fingers_for_base = 4
 nb_fingers_for_aim = 1
+progressBar = NodePath("../ProgressBarBlue")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZoneBlue" unique_id=728963688]
 position = Vector2(38, 19)
@@ -1262,6 +1263,8 @@ position = Vector2(1128, 593)
 
 [connection signal="match_started" from="." to="RebondisseurZoneBleu" method="_on_board_match_started"]
 [connection signal="match_started" from="." to="RebondisseurZoneRouge" method="_on_board_match_started"]
+[connection signal="countdown_finished" from="CanvasLayer/Countdown" to="ProgressBarRed" method="_on_countdown_countdown_finished"]
+[connection signal="countdown_finished" from="CanvasLayer/Countdown" to="ProgressBarBlue" method="_on_countdown_countdown_finished"]
 [connection signal="players_ready" from="RebondisseurZoneBleu" to="." method="_on_rebondisseur_zone_bleu_players_ready"]
 [connection signal="players_ready" from="RebondisseurZoneRouge" to="." method="_on_rebondisseur_zone_rouge_players_ready"]
 [connection signal="animation_finished" from="Clock" to="Clock" method="_on_animation_finished"]
