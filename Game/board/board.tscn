@@ -1051,8 +1051,7 @@ debug_color = Color(0.7375592, 0.46834207, 0.031818468, 0.41960785)
 position = Vector2(1115, 345)
 collision_layer = 2
 collision_mask = 2
-nb_fingers_for_base = 4
-nb_fingers_for_aim = 1
+nb_fingers_for_base = 5
 progressBar = NodePath("../ProgressBarBlue")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZoneBlue" unique_id=728963688]
@@ -1064,6 +1063,7 @@ debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
 position = Vector2(2230, 690)
 collision_layer = 4
 collision_mask = 4
+nb_fingers_for_base = 5
 progressBar = NodePath("../ProgressBarRed")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="VacuumZoneRed" unique_id=1505698489]
@@ -1072,6 +1072,7 @@ shape = SubResource("RectangleShape2D_uhwdc")
 debug_color = Color(0.9902335, 0, 0.2865104, 0.41960785)
 
 [node name="RebondisseurZoneBleu" parent="." unique_id=302749196 instance=ExtResource("3_vsefh")]
+z_index = 1
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="RebondisseurZoneBleu" unique_id=260065662]
 position = Vector2(837, 357)
@@ -1079,6 +1080,7 @@ shape = SubResource("RectangleShape2D_vsefh")
 debug_color = Color(0.16044924, 0.94135463, 3.080368e-06, 0.41960785)
 
 [node name="RebondisseurZoneRouge" parent="." unique_id=588083500 instance=ExtResource("3_vsefh")]
+z_index = 1
 collision_layer = 256
 collision_mask = 256
 

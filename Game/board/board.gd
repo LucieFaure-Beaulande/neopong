@@ -23,6 +23,8 @@ const SLINGSHOT_PROJECTILE = preload("uid://v0s1jbtupl54")
 @onready var slingshot_test_position: Marker2D = $slingshot_test_position
 @onready var vacuum_test_aim_position: Marker2D = $vacuum_test_aim_position
 
+var test_powerbtn_first_already:bool = false
+var test_powerbtn_second_already:bool = false
 var test_projectile_already_shot: bool = false
 var test_vacuum_already_spawned: bool = false
 
@@ -158,21 +160,25 @@ func handle_test_script():
 			test_disable_buttons()
 			
 		1: # début des tests de pouvoir Aspirateur
+			if !test_powerbtn_first_already:
+				test_powerbtn_first_already = true
+				test_disable_buttons()
 			# Fill blue bar
 			progress_bar_blue.value = progress_bar_blue.max_value
 			# Empty other bar
 			progress_bar_red.value = 0
 			
-			test_disable_buttons()
 			vacuum_button_blue.disabled = false
 			
 		2: # début des tests de pouvoir Slingshot
+			if !test_powerbtn_second_already:
+				test_powerbtn_second_already = true
+				test_disable_buttons()
 			# Fill red bar
 			progress_bar_red.value = progress_bar_red.max_value
 			# Empty other bar
 			progress_bar_blue.value = 0
 			
-			test_disable_buttons()
 			slingshot_button_red.disabled = false
 			
 		3: # Attaque surprise slingshot!
@@ -182,7 +188,10 @@ func handle_test_script():
 				add_child(proj)
 				var proj_direction : Vector2 = proj.global_position.direction_to(rebondisseur_zone_rouge.latest_center_position)
 				var test_proj_speed := 400.0
+				proj.collision_layer = 258
+				proj.collision_mask = 258
 				proj.apply_central_impulse(proj_direction * test_proj_speed)
+		
 				test_projectile_already_shot = true
 			
 			test_disable_buttons()
